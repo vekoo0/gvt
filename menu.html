@@ -173,6 +173,8 @@
     }
   </style>
 <link rel="stylesheet" href="whatsapp.css">
+<link rel="stylesheet" href="site.css">
+<script src="site.js" defer></script>
 </head>
 
 <body>
@@ -184,7 +186,9 @@
     <a href="index.html">Ana Sayfa</a>
     <a href="menu.html" class="active">Menü</a>
     <a href="hakkimizda.html">Hakkımızda</a>
-    <a href="iletisim.html">İletişim</a>
+    <a href="toplu-yemek.html" class="nav-catering">Toplu Yemek ↗</a>
+<a href="blog.html">Blog</a>
+<a href="iletisim.html">İletişim</a>
   </nav>
 </header>
 
@@ -194,20 +198,24 @@
 </section>
 
 <div class="categories">
-  <button class="active" data-filter="all">Tümü</button>
-  <button data-filter="tavuk">Tavuk</button>
-  <button data-filter="pilav">Pilav</button>
-  <button data-filter="makarna">Makarna</button>
-  <button data-filter="meze">Meze</button>
+  <button class="active" data-filter="all"><span aria-hidden="true">✦</span> Tümü</button>
+  <button data-filter="tavuk"><span aria-hidden="true">🍗</span> Tavuk</button>
+  <button data-filter="pilav"><span aria-hidden="true">🍚</span> Pilav</button>
+  <button data-filter="makarna"><span aria-hidden="true">🍝</span> Makarna</button>
+  <button data-filter="meze"><span aria-hidden="true">🥗</span> Meze</button>
 </div>
 
 <p id="status" class="status">Menü yükleniyor...</p>
 
 <main class="products" id="productList"></main>
 
-<footer>
-  © SOS & CO. — Sosun bol, lezzetin tam hali.
-</footer>
+<section class="site-wrap catering-banner" aria-labelledby="catering-title"><span class="kicker">KALABALIK SOFRALAR, BOL LEZZET</span><h2 id="catering-title" class="feature-title">Sofra büyüsün.<br>Lezzet hep bir arada olsun.</h2><p class="feature-copy">İş yeri yemekleri, mevlit, düğün ve özel davetler için toplu yemek talebinizi bize iletin. Menüyü, kişi sayısını ve organizasyon ayrıntılarını birlikte konuşalım.</p><div class="occasion-tags"><span>İş yeri &amp; ofis</span><span>Mevlit</span><span>Düğün &amp; nişan</span><span>Özel davetler</span></div><div class="feature-actions"><a class="feature-button" href="toplu-yemek.html#teklif">Toplu Yemek İçin Teklif Al ↗</a><a class="feature-link" href="toplu-yemek.html">Nasıl planlıyoruz? →</a></div></section>
+<footer class="site-footer"><div class="site-wrap footer-grid">
+<div><a class="logo" href="index.html">SOS <span>&amp;</span> CO.</a><p>Sosun bol, lezzetin tam hali.</p><p>Soslu tavuk, pilav, makarna ve meze.<br>Tek kişilik molalardan kalabalık sofralara.</p><a class="footer-cta" href="toplu-yemek.html">Toplu yemek için teklif al ↗</a></div>
+<div><h2>Keşfet</h2><a href="hakkimizda.html">Hakkımızda</a><a href="blog.html">Lezzet Günlüğü</a><a href="index.html#mekanimiz">Mekânımız</a><a href="iletisim.html">İletişim</a></div>
+<div><h2>Menü &amp; organizasyon</h2><a href="menu.html?kategori=tavuk">Soslu Tavuk</a><a href="menu.html?kategori=pilav">Pilav</a><a href="menu.html?kategori=makarna">Makarna</a><a href="menu.html?kategori=meze">Meze</a><a href="toplu-yemek.html">İş yeri · Mevlit · Düğün</a></div>
+<div><h2>Bize ulaşın</h2><a href="tel:+905343370248">0534 337 02 48</a><p>Nivo İstanbul, İnönü Mahallesi<br>B Blok Sokak No:73<br>Küçükçekmece / İstanbul</p><p>Pazartesi – Cumartesi: 11:00 – 02:00<br>Pazar: Kapalı</p><a href="https://www.google.com/maps/search/?api=1&amp;query=41.0262079%2C28.8067418" target="_blank" rel="noopener noreferrer">Yol tarifi al ↗</a></div>
+</div><div class="site-wrap footer-bottom">© <span id="year"></span> SOS &amp; CO. · Tüm hakları saklıdır.<span>Birlikte daha lezzetli.</span></div></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -233,7 +241,12 @@
     document.querySelectorAll(".categories button");
 
   let allProducts = [];
-  let activeFilter = "all";
+  const requestedFilter = new URLSearchParams(window.location.search).get("kategori");
+  let activeFilter = ["tavuk", "pilav", "makarna", "meze"].includes(requestedFilter) ? requestedFilter : "all";
+  buttons.forEach(button => {
+    button.classList.toggle("active", button.dataset.filter === activeFilter);
+    button.setAttribute("aria-pressed", String(button.dataset.filter === activeFilter));
+  });
 
   // Varsayılan ürün görselleri
   const defaultImages = {
@@ -363,9 +376,11 @@
     button.addEventListener("click", () => {
       buttons.forEach(b => {
         b.classList.remove("active");
+        b.setAttribute("aria-pressed", "false");
       });
 
       button.classList.add("active");
+      button.setAttribute("aria-pressed", "true");
 
       activeFilter = button.dataset.filter;
 

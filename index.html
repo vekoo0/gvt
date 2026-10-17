@@ -336,6 +336,8 @@ footer p { line-height:1.8; }
 }
 </style>
 <link rel="stylesheet" href="whatsapp.css">
+<link rel="stylesheet" href="site.css">
+<script src="site.js" defer></script>
 </head>
 
 <body>
@@ -348,7 +350,9 @@ footer p { line-height:1.8; }
       <a href="index.html">Ana Sayfa</a>
       <a href="menu.html">Menümüz</a>
       <a href="hakkimizda.html">Hakkımızda</a>
-      <a href="iletisim.html">İletişim</a>
+      <a href="toplu-yemek.html" class="nav-catering">Toplu Yemek ↗</a>
+<a href="blog.html">Blog</a>
+<a href="iletisim.html">İletişim</a>
     </div>
 
     <a class="btn" href="menu.html">Menüyü İncele ↗</a>
@@ -440,17 +444,18 @@ footer p { line-height:1.8; }
   </div>
 </section>
 
+<section class="site-wrap catering-banner" aria-labelledby="catering-title"><span class="kicker">KALABALIK SOFRALAR, BOL LEZZET</span><h2 id="catering-title" class="feature-title">Sofra büyüsün.<br>Lezzet hep bir arada olsun.</h2><p class="feature-copy">İş yeri yemekleri, mevlit, düğün ve özel davetler için toplu yemek talebinizi bize iletin. Menüyü, kişi sayısını ve organizasyon ayrıntılarını birlikte konuşalım.</p><div class="occasion-tags"><span>İş yeri &amp; ofis</span><span>Mevlit</span><span>Düğün &amp; nişan</span><span>Özel davetler</span></div><div class="feature-actions"><a class="feature-button" href="toplu-yemek.html#teklif">Toplu Yemek İçin Teklif Al ↗</a><a class="feature-link" href="toplu-yemek.html">Nasıl planlıyoruz? →</a></div></section>
 <div class="categories container">
-  <a class="category" href="menu.html">
+  <a class="category" href="menu.html?kategori=tavuk">
     <span>🍗</span><b>Soslu Tavuk</b>
   </a>
-  <a class="category" href="menu.html">
+  <a class="category" href="menu.html?kategori=pilav">
     <span>🍚</span><b>Pilav</b>
   </a>
-  <a class="category" href="menu.html">
+  <a class="category" href="menu.html?kategori=makarna">
     <span>🍝</span><b>Makarna</b>
   </a>
-  <a class="category" href="menu.html">
+  <a class="category" href="menu.html?kategori=meze">
     <span>🥗</span><b>Meze</b>
   </a>
 </div>
@@ -505,27 +510,15 @@ footer p { line-height:1.8; }
   <div class="qr-icon" aria-hidden="true">▦</div>
 </section>
 
+<section class="site-wrap feature-section" id="mekanimiz"><span class="kicker">SOS &amp; CO.’YA UĞRAYIN</span><h2 class="feature-title">Soframızda yeriniz var.</h2><div class="gallery-grid"><figure><img src="mekan1.jpg" alt="SOS & CO. restoranının dış görünümü" loading="lazy" width="1600" height="1200"><figcaption>Küçükçekmece’de lezzet molanız.</figcaption></figure><figure><img src="mekan2.jpg" alt="SOS & CO. restoranının iç mekânı ve yemek tezgâhı" loading="lazy" width="1600" height="1200"><figcaption>Lezzetlerimizi yerinde keşfedin.</figcaption></figure></div></section><section class="site-wrap feature-section"><span class="kicker">LEZZET GÜNLÜĞÜ</span><h2 class="feature-title">Sofraya dair fikirler.</h2><div class="feature-grid"><a class="feature-card" href="blog-toplu-yemek-planlama.html"><span class="blog-tag">ORGANİZASYON</span><h3>Toplu yemek siparişi nasıl planlanır?</h3><p>Kişi sayısından servis saatine, teklif istemeden önce hazırlayabileceğiniz kısa bir rehber.</p><span class="feature-link">Yazıyı oku →</span></a><a class="feature-card" href="blog-is-yeri-yemek.html"><span class="blog-tag">İŞ YERİ SOFRALARI</span><h3>Ekibiniz için yemek planlarken</h3><p>Ofis ve iş yeri yemeklerinde menü, saat ve porsiyon planını birlikte düşünün.</p><span class="feature-link">Yazıyı oku →</span></a><a class="feature-card" href="blog-mevlit-dugun-menusu.html"><span class="blog-tag">ÖZEL GÜNLER</span><h3>Mevlit ve düğün sofraları için küçük bir rehber</h3><p>Misafir sayısı, menü ve servis beklentilerini önceden konuşarak hazırlığınızı kolaylaştırın.</p><span class="feature-link">Yazıyı oku →</span></a></div><a class="feature-link" href="blog.html">Blogu keşfet →</a></section>
 </main>
 
-<footer>
-  <div class="container">
-    <a class="logo" href="index.html">SOS <span>&</span> CO.</a>
-
-    <p>Soslu Tavuk · Pilav · Makarna · Meze</p>
-    <p>Sosun bol, lezzetin tam hali!</p>
-
-    <p>
-      <a href="menu.html">Menümüz</a> ·
-      <a href="hakkimizda.html">Hakkımızda</a> ·
-      <a href="iletisim.html">İletişim</a>
-    </p>
-
-    <small>
-      © <span id="year"></span> SOS & CO.
-      Tüm hakları saklıdır.
-    </small>
-  </div>
-</footer>
+<footer class="site-footer"><div class="site-wrap footer-grid">
+<div><a class="logo" href="index.html">SOS <span>&amp;</span> CO.</a><p>Sosun bol, lezzetin tam hali.</p><p>Soslu tavuk, pilav, makarna ve meze.<br>Tek kişilik molalardan kalabalık sofralara.</p><a class="footer-cta" href="toplu-yemek.html">Toplu yemek için teklif al ↗</a></div>
+<div><h2>Keşfet</h2><a href="hakkimizda.html">Hakkımızda</a><a href="blog.html">Lezzet Günlüğü</a><a href="index.html#mekanimiz">Mekânımız</a><a href="iletisim.html">İletişim</a></div>
+<div><h2>Menü &amp; organizasyon</h2><a href="menu.html?kategori=tavuk">Soslu Tavuk</a><a href="menu.html?kategori=pilav">Pilav</a><a href="menu.html?kategori=makarna">Makarna</a><a href="menu.html?kategori=meze">Meze</a><a href="toplu-yemek.html">İş yeri · Mevlit · Düğün</a></div>
+<div><h2>Bize ulaşın</h2><a href="tel:+905343370248">0534 337 02 48</a><p>Nivo İstanbul, İnönü Mahallesi<br>B Blok Sokak No:73<br>Küçükçekmece / İstanbul</p><p>Pazartesi – Cumartesi: 11:00 – 02:00<br>Pazar: Kapalı</p><a href="https://www.google.com/maps/search/?api=1&amp;query=41.0262079%2C28.8067418" target="_blank" rel="noopener noreferrer">Yol tarifi al ↗</a></div>
+</div><div class="site-wrap footer-bottom">© <span id="year"></span> SOS &amp; CO. · Tüm hakları saklıdır.<span>Birlikte daha lezzetli.</span></div></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
