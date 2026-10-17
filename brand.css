@@ -1,0 +1,7 @@
+/* Original SOS & CO. artwork converted from the supplied PDF. */
+.logo:has(.brand-image) { display: inline-flex; align-items: center; flex-shrink: 0; line-height: 0; }
+.brand-image { display: block; width: 95px; height: auto; max-width: 100%; border-radius: 8px; }
+.site-footer .brand-image { width: 155px; }
+.login-box .logo { justify-content: center; width: 100%; }
+.login-box .brand-image { width: 170px; }
+@media (max-width: 600px) { header .brand-image { width: 76px; } }
