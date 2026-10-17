@@ -1,0 +1,754 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SOS & CO. | Sosun Bol, Lezzetin Tam Hali</title>
+<meta name="description" content="SOS & CO. soslu tavuk, pilav, makarna ve meze çeşitleri.">
+
+<style>
+:root {
+  --bg:#0b0b09;
+  --panel:#181611;
+  --cream:#fff0d5;
+  --orange:#ffa52f;
+  --muted:#c4b9a7;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--cream);
+  font-family:Arial,sans-serif;
+}
+a { color:inherit; text-decoration:none; }
+.container { width:min(1160px,92%); margin:auto; }
+
+header {
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:#0b0b09f5;
+  border-bottom:1px solid #ffffff20;
+}
+nav {
+  min-height:80px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.logo {
+  font-size:29px;
+  font-weight:900;
+  font-style:italic;
+  white-space:nowrap;
+}
+.logo span, h1 span { color:var(--orange); }
+.links { display:flex; flex-wrap:wrap; gap:22px; }
+.links a { color:var(--muted); font-size:14px; }
+.links a:hover { color:var(--orange); }
+
+.btn {
+  display:inline-block;
+  padding:14px 22px;
+  border-radius:30px;
+  background:var(--orange);
+  color:#171006;
+  font-weight:bold;
+  transition:.2s;
+}
+.btn:hover { background:#ffc06c; transform:translateY(-2px); }
+.secondary {
+  display:inline-block;
+  padding:13px 21px;
+  border:1px solid #fff0d566;
+  border-radius:30px;
+}
+.secondary:hover { border-color:var(--orange); }
+
+.hero {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:35px;
+  align-items:center;
+  padding-top:65px;
+  padding-bottom:65px;
+}
+.eyebrow {
+  color:var(--orange);
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:3px;
+}
+h1 {
+  font-size:clamp(45px,7vw,80px);
+  line-height:1.04;
+  letter-spacing:-3px;
+  margin:18px 0;
+}
+.hero p {
+  color:var(--muted);
+  line-height:1.9;
+  max-width:470px;
+}
+.actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:25px; }
+
+/* ANİMASYONLU SLAYTLAR */
+.slider {
+  position:relative;
+  height:410px;
+  overflow:hidden;
+  border-radius:20px;
+  border:1px solid #ffffff25;
+  background:#181611;
+}
+.slide {
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transform:translateX(45px) scale(1.04);
+  transition:opacity .8s ease,transform .8s ease;
+  pointer-events:none;
+}
+.slide.active {
+  opacity:1;
+  transform:translateX(0) scale(1);
+  pointer-events:auto;
+  z-index:1;
+}
+.slide img {
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.slide::after {
+  content:"";
+  position:absolute;
+  inset:20% 0 0;
+  background:linear-gradient(transparent,#080806e8);
+}
+.slide-caption {
+  position:absolute;
+  z-index:2;
+  bottom:55px;
+  left:27px;
+  right:27px;
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .6s ease .25s,transform .6s ease .25s;
+}
+.slide.active .slide-caption {
+  opacity:1;
+  transform:translateY(0);
+}
+.slide-caption strong {
+  display:block;
+  color:var(--orange);
+  font-size:25px;
+  margin-bottom:10px;
+}
+.slide-caption span { line-height:1.6; }
+
+.slider-arrow {
+  position:absolute;
+  z-index:4;
+  top:50%;
+  transform:translateY(-50%);
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border:1px solid #ffffff66;
+  background:#0b0b09aa;
+  color:white;
+  font-size:25px;
+  cursor:pointer;
+}
+.slider-arrow:hover {
+  background:var(--orange);
+  color:#111;
+}
+.prev { left:12px; }
+.next { right:12px; }
+
+.slider-dots {
+  position:absolute;
+  z-index:4;
+  bottom:15px;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:center;
+  gap:9px;
+}
+.dot {
+  width:9px;
+  height:9px;
+  border:0;
+  border-radius:20px;
+  padding:0;
+  background:#ffffff80;
+  cursor:pointer;
+}
+.dot.active { width:26px; background:var(--orange); }
+
+/* KATEGORİLER */
+.categories {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  padding:10px 0 65px;
+}
+.category {
+  background:var(--panel);
+  border:1px solid #ffffff18;
+  border-radius:14px;
+  padding:25px 15px;
+  text-align:center;
+  transition:.25s;
+}
+.category:hover {
+  border-color:var(--orange);
+  transform:translateY(-5px);
+}
+.category span { display:block; font-size:32px; margin-bottom:12px; }
+.category b { color:var(--orange); }
+
+/* ÜRÜNLER */
+.menu { padding:30px 0 75px; }
+.section-title { font-size:clamp(30px,4vw,44px); }
+.section-description { color:var(--muted); line-height:1.8; }
+.products {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  margin-top:30px;
+}
+.product {
+  background:var(--panel);
+  border:1px solid #ffffff18;
+  border-radius:15px;
+  overflow:hidden;
+  transition:.25s;
+}
+.product:hover {
+  transform:translateY(-5px);
+  border-color:var(--orange);
+}
+.product img {
+  display:block;
+  width:100%;
+  height:220px;
+  object-fit:cover;
+}
+.product-info { padding:20px; }
+.product h3 { margin:0 0 10px; }
+.product p {
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.7;
+  min-height:45px;
+}
+.price {
+  color:var(--orange);
+  font-size:21px;
+  font-weight:bold;
+}
+.loading {
+  grid-column:1/-1;
+  text-align:center;
+  color:var(--muted);
+  padding:30px;
+}
+.all-menu { text-align:center; margin-top:35px; }
+
+/* HAKKIMIZDA VE QR */
+.about-section,.qr-section {
+  background:var(--panel);
+  border:1px solid #ffffff18;
+  border-radius:18px;
+  padding:38px;
+  margin-bottom:65px;
+}
+.about-section h2,.qr-section h2 {
+  font-size:clamp(28px,4vw,38px);
+}
+.about-section p,.qr-section p {
+  color:var(--muted);
+  line-height:1.9;
+}
+.founder-name { color:var(--orange); font-weight:bold; }
+.qr-section {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:25px;
+}
+.qr-icon { font-size:65px; color:var(--orange); }
+
+footer {
+  border-top:1px solid #ffffff20;
+  padding:35px 0;
+  color:var(--muted);
+  font-size:14px;
+}
+footer p { line-height:1.8; }
+
+/* AŞAĞI KAYDIRMA ANİMASYONU */
+.reveal {
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+.reveal.visible {
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media(max-width:760px) {
+  nav { flex-wrap:wrap; padding:16px 0; }
+  .logo { font-size:25px; }
+  .links {
+    order:3;
+    width:100%;
+    justify-content:center;
+    gap:15px;
+  }
+  .links a { font-size:13px; }
+  nav>.btn { padding:11px 13px; font-size:12px; }
+  .hero {
+    grid-template-columns:1fr;
+    padding-top:40px;
+  }
+  .slider { height:320px; }
+  .slide-caption strong { font-size:21px; }
+  .categories { grid-template-columns:repeat(2,1fr); }
+  .products { grid-template-columns:1fr; }
+  .product img { height:240px; }
+  .about-section,.qr-section { padding:25px; }
+  .qr-section { flex-direction:column; align-items:flex-start; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .slide,.slide-caption,.reveal { transition:none; transform:none; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <nav class="container">
+    <a class="logo" href="index.html">SOS <span>&</span> CO.</a>
+
+    <div class="links">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="menu.html">Menümüz</a>
+      <a href="hakkimizda.html">Hakkımızda</a>
+      <a href="iletisim.html">İletişim</a>
+    </div>
+
+    <a class="btn" href="menu.html">Menüyü İncele ↗</a>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero container">
+
+  <div>
+    <div class="eyebrow">SOSUN BOL, LEZZETİN TAM HALİ</div>
+
+    <h1>
+      Bol soslu.<br>
+      Bol lezzetli.<br>
+      <span>SOS & CO.</span>
+    </h1>
+
+    <p>
+      Soslu tavuk, nefis makarnalar, tane tane pilavlar
+      ve birbirinden lezzetli mezeler.
+      Favori lezzetinle tanışmaya hazır mısın?
+    </p>
+
+    <div class="actions">
+      <a class="btn" href="menu.html">Lezzetleri Keşfet →</a>
+      <a class="secondary" href="iletisim.html">Bize Ulaş</a>
+    </div>
+  </div>
+
+  <div class="slider" id="foodSlider">
+
+    <!-- SENİN RESTORANIN: DIŞ GÖRÜNÜM -->
+    <div class="slide active">
+      <img src="mekan1.jpg" alt="SOS & CO. restoran dış görünümü">
+      <div class="slide-caption">
+        <strong>SOS & CO.'ya Hoş Geldiniz</strong>
+        <span>Küçükçekmece'de lezzetin yeni adresi.</span>
+      </div>
+    </div>
+
+    <!-- SENİN RESTORANIN: İÇ GÖRÜNÜM -->
+    <div class="slide">
+      <img src="mekan2.jpg" alt="SOS & CO. restoran iç görünümü">
+      <div class="slide-caption">
+        <strong>Keyifli Bir Lezzet Molası</strong>
+        <span>Sıcacık bir ortam, bol soslu lezzetler.</span>
+      </div>
+    </div>
+
+    <!-- ÖRNEK YEMEK GÖRSELİ -->
+    <div class="slide">
+      <img
+        src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&amp;fit=crop&amp;w=1100&amp;q=85"
+        alt="Tavuk yemeği">
+      <div class="slide-caption">
+        <strong>Bol Soslu Tavuk</strong>
+        <span>Her lokmada bol lezzet!</span>
+      </div>
+    </div>
+
+    <!-- ÖRNEK MAKARNA GÖRSELİ -->
+    <div class="slide">
+      <img
+        src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&amp;fit=crop&amp;w=1100&amp;q=85"
+        alt="Makarna">
+      <div class="slide-caption">
+        <strong>Nefis Makarnalar</strong>
+        <span>Sosuyla fark yaratan tatlar.</span>
+      </div>
+    </div>
+
+    <!-- ÖRNEK PİLAV GÖRSELİ -->
+    <div class="slide">
+      <img
+        src="https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&amp;fit=crop&amp;w=1100&amp;q=85"
+        alt="Pilav">
+      <div class="slide-caption">
+        <strong>Lezzetli Pilavlar</strong>
+        <span>En sevdiğin lezzetler bir arada.</span>
+      </div>
+    </div>
+
+    <button class="slider-arrow prev" type="button" aria-label="Önceki görsel">‹</button>
+    <button class="slider-arrow next" type="button" aria-label="Sonraki görsel">›</button>
+    <div class="slider-dots"></div>
+
+  </div>
+</section>
+
+<div class="categories container">
+  <a class="category" href="menu.html">
+    <span>🍗</span><b>Soslu Tavuk</b>
+  </a>
+  <a class="category" href="menu.html">
+    <span>🍚</span><b>Pilav</b>
+  </a>
+  <a class="category" href="menu.html">
+    <span>🍝</span><b>Makarna</b>
+  </a>
+  <a class="category" href="menu.html">
+    <span>🥗</span><b>Meze</b>
+  </a>
+</div>
+
+<section class="menu container" id="menu">
+  <div class="eyebrow">MENÜDEN LEZZETLER</div>
+  <h2 class="section-title">Öne Çıkan Lezzetler</h2>
+  <p class="section-description">
+    Menümüzdeki en yeni lezzetleri keşfet.
+  </p>
+
+  <div class="products" id="products">
+    <p class="loading">Ürünler yükleniyor...</p>
+  </div>
+
+  <div class="all-menu">
+    <a class="btn" href="menu.html">Tüm Menüyü Görüntüle →</a>
+  </div>
+</section>
+
+<section class="container about-section" id="hakkimizda">
+  <div class="eyebrow">BİZ KİMİZ?</div>
+  <h2>SOS & CO. Hakkında</h2>
+
+  <p>
+    SOS & CO., bol soslu ve lezzetli yemekleri
+    bir araya getiren bir lezzet markasıdır.
+    Soslu tavuk, pilav, makarna ve meze çeşitleriyle
+    keyifli bir yemek deneyimi sunmayı hedefler.
+  </p>
+
+  <p>
+    <strong>Kurucumuz:</strong>
+    <span class="founder-name">Muhammed Emin Kılıç</span>
+  </p>
+
+  <a class="btn" href="hakkimizda.html">
+    Hikâyemizi Keşfet →
+  </a>
+</section>
+
+<section class="container qr-section" id="qr-menu">
+  <div>
+    <div class="eyebrow">HER ZAMAN ELİNİN ALTINDA</div>
+    <h2>Menümüz cebinde.</h2>
+    <p>
+      Güncel menümüzü dilediğin zaman
+      telefonundan inceleyebilirsin.
+    </p>
+    <a class="btn" href="menu.html">Menüyü Görüntüle →</a>
+  </div>
+  <div class="qr-icon" aria-hidden="true">▦</div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <a class="logo" href="index.html">SOS <span>&</span> CO.</a>
+
+    <p>Soslu Tavuk · Pilav · Makarna · Meze</p>
+    <p>Sosun bol, lezzetin tam hali!</p>
+
+    <p>
+      <a href="menu.html">Menümüz</a> ·
+      <a href="hakkimizda.html">Hakkımızda</a> ·
+      <a href="iletisim.html">İletişim</a>
+    </p>
+
+    <small>
+      © <span id="year"></span> SOS & CO.
+      Tüm hakları saklıdır.
+    </small>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL =
+  "https://uhccplwhgdkusrpivole.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_oIc7Fih4UJL4vUZ82wbzRA_5EaE05Dp";
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+/* SLAYT SİSTEMİ */
+const slider = document.getElementById("foodSlider");
+const slides = [...slider.querySelectorAll(".slide")];
+const dotsBox = slider.querySelector(".slider-dots");
+const reduceMotion =
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let activeSlide = 0;
+let sliderTimer;
+
+slides.forEach((slide, index) => {
+  const dot = document.createElement("button");
+  dot.type = "button";
+  dot.className = "dot";
+  dot.setAttribute("aria-label", (index + 1) + ". görsel");
+  dot.addEventListener("click", () => {
+    showSlide(index);
+    startSlider();
+  });
+  dotsBox.appendChild(dot);
+});
+
+const dots = [...dotsBox.children];
+
+function showSlide(index) {
+  activeSlide = (index + slides.length) % slides.length;
+
+  slides.forEach((slide, i) => {
+    const selected = i === activeSlide;
+    slide.classList.toggle("active", selected);
+    slide.setAttribute("aria-hidden", String(!selected));
+    dots[i].classList.toggle("active", selected);
+  });
+}
+
+function startSlider() {
+  clearInterval(sliderTimer);
+
+  if (!reduceMotion) {
+    sliderTimer = setInterval(() => {
+      showSlide(activeSlide + 1);
+    }, 5000);
+  }
+}
+
+slider.querySelector(".prev").addEventListener("click", () => {
+  showSlide(activeSlide - 1);
+  startSlider();
+});
+
+slider.querySelector(".next").addEventListener("click", () => {
+  showSlide(activeSlide + 1);
+  startSlider();
+});
+
+slider.addEventListener("mouseenter", () => {
+  clearInterval(sliderTimer);
+});
+
+slider.addEventListener("mouseleave", startSlider);
+
+showSlide(0);
+startSlider();
+
+/* SAYFA KAYDIRMA ANİMASYONU */
+const revealElements = document.querySelectorAll(
+  ".categories, .menu, .about-section, .qr-section"
+);
+
+if ("IntersectionObserver" in window && !reduceMotion) {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  revealElements.forEach(element => {
+    element.classList.add("reveal");
+    observer.observe(element);
+  });
+}
+
+/* SUPABASE ÜRÜNLERİ */
+const productsContainer = document.getElementById("products");
+
+const defaultImages = {
+  tavuk:
+    "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=700&q=80",
+  pilav:
+    "https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=700&q=80",
+  makarna:
+    "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=700&q=80",
+  meze:
+    "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=700&q=80"
+};
+
+function getDefaultImage(category) {
+  const key = String(category || "")
+    .toLocaleLowerCase("tr-TR");
+
+  if (key.includes("tavuk")) return defaultImages.tavuk;
+  if (key.includes("pilav")) return defaultImages.pilav;
+  if (key.includes("makarna")) return defaultImages.makarna;
+  if (key.includes("meze")) return defaultImages.meze;
+
+  return defaultImages.tavuk;
+}
+
+function formatPrice(value) {
+  const price = Number(value);
+
+  if (!Number.isFinite(price)) {
+    return "Fiyat bilgisi yok";
+  }
+
+  return new Intl.NumberFormat("tr-TR", {
+    style: "currency",
+    currency: "TRY"
+  }).format(price);
+}
+
+function createProductCard(product) {
+  const article = document.createElement("article");
+  article.className = "product";
+
+  const image = document.createElement("img");
+  image.src = product.image_url ||
+    getDefaultImage(product.category);
+  image.alt = product.name || "SOS & CO. ürünü";
+  image.loading = "lazy";
+
+  image.onerror = () => {
+    const fallback = getDefaultImage(product.category);
+    if (image.src !== fallback) image.src = fallback;
+  };
+
+  const info = document.createElement("div");
+  info.className = "product-info";
+
+  const name = document.createElement("h3");
+  name.textContent = product.name || "Ürün";
+
+  const description = document.createElement("p");
+  description.textContent =
+    product.description || "Lezzetli SOS & CO. ürünü.";
+
+  const price = document.createElement("div");
+  price.className = "price";
+  price.textContent = formatPrice(product.price);
+
+  info.append(name, description, price);
+  article.append(image, info);
+
+  return article;
+}
+
+async function loadProducts() {
+  try {
+    if (!window.supabase) {
+      throw new Error("Supabase yüklenemedi.");
+    }
+
+    const db = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    const { data, error } = await db
+      .from("products")
+      .select("id,name,description,price,category,image_url")
+      .eq("is_available", true)
+      .order("created_at", { ascending:false })
+      .limit(6);
+
+    if (error) throw error;
+
+    productsContainer.replaceChildren();
+
+    if (!data || data.length === 0) {
+      const message = document.createElement("p");
+      message.className = "loading";
+      message.textContent = "Henüz ürün bulunmuyor.";
+      productsContainer.appendChild(message);
+      return;
+    }
+
+    data.forEach(product => {
+      productsContainer.appendChild(
+        createProductCard(product)
+      );
+    });
+
+  } catch (error) {
+    console.error("Ürün yükleme hatası:", error);
+
+    productsContainer.replaceChildren();
+
+    const message = document.createElement("p");
+    message.className = "loading";
+    message.textContent =
+      "Ürünler şu anda yüklenemiyor. Lütfen tekrar deneyin.";
+
+    productsContainer.appendChild(message);
+  }
+}
+
+loadProducts();
+</script>
+
+</body>
+</html>

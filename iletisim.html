@@ -1,0 +1,583 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>İletişim | SOS & CO.</title>
+  <meta name="description" content="SOS & CO. iletişim, adres, telefon, çalışma saatleri ve konum bilgileri.">
+
+  <style>
+    :root {
+      --bg: #0b0b09;
+      --panel: #181611;
+      --cream: #fff0d5;
+      --orange: #ffa52f;
+      --muted: #c4b9a7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--cream);
+      font-family: Arial, sans-serif;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 0 auto;
+    }
+
+    /* ÜST MENÜ */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #0b0b09f5;
+      border-bottom: 1px solid #ffffff20;
+    }
+
+    .navbar {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 29px;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: -1px;
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: var(--orange);
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    nav a {
+      color: var(--muted);
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--orange);
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--orange);
+      color: #171006;
+      padding: 14px 22px;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: #ffbd66;
+    }
+
+    .outline-btn {
+      display: inline-block;
+      border: 1px solid var(--orange);
+      color: var(--cream);
+      padding: 13px 21px;
+      border-radius: 30px;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .outline-btn:hover {
+      background: #ffa52f20;
+    }
+
+    /* SAYFA BAŞLIĞI */
+
+    main {
+      padding: 70px 0 90px;
+    }
+
+    .eyebrow {
+      color: var(--orange);
+      font-size: 12px;
+      letter-spacing: 3px;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 68px);
+      margin: 15px 0 20px;
+      letter-spacing: -2px;
+    }
+
+    h1 span {
+      color: var(--orange);
+    }
+
+    .intro {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+      margin-bottom: 38px;
+    }
+
+    /* İLETİŞİM KARTLARI */
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 35px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid #ffffff18;
+      border-radius: 18px;
+      padding: 28px;
+    }
+
+    .card-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .card h2 {
+      color: var(--orange);
+      font-size: 22px;
+      margin: 0 0 15px;
+    }
+
+    .card p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 15px;
+      margin: 0 0 20px;
+    }
+
+    .text-link {
+      color: var(--orange);
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .text-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ÇALIŞMA SAATLERİ */
+
+    .hours {
+      background: var(--panel);
+      border: 1px solid #ffffff18;
+      border-radius: 18px;
+      padding: 35px;
+      margin-bottom: 35px;
+    }
+
+    .hours h2 {
+      margin: 12px 0 25px;
+      font-size: 30px;
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 15px 0;
+      border-bottom: 1px solid #ffffff15;
+    }
+
+    .hours-row:last-child {
+      border-bottom: none;
+    }
+
+    .hours-row span:last-child {
+      color: var(--orange);
+      font-weight: bold;
+    }
+
+    .hours-row.closed span:last-child {
+      color: #f08080;
+    }
+
+    /* HARİTA */
+
+    .map-section {
+      background: var(--panel);
+      border: 1px solid #ffffff18;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .map-heading {
+      padding: 30px 30px 20px;
+    }
+
+    .map-heading h2 {
+      margin: 12px 0;
+      font-size: 30px;
+    }
+
+    .map-heading p {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .map-frame {
+      display: block;
+      width: 100%;
+      height: 420px;
+      border: 0;
+      background: #24211b;
+    }
+
+    .map-actions {
+      padding: 25px 30px 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-top: 20px;
+    }
+
+    /* ALT KISIM */
+
+    footer {
+      border-top: 1px solid #ffffff20;
+      padding: 35px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    footer p {
+      line-height: 1.8;
+    }
+
+    /* TELEFON UYUMU */
+
+    @media (max-width: 850px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .navbar {
+        flex-wrap: wrap;
+        padding: 18px 0;
+      }
+
+      .logo {
+        font-size: 25px;
+      }
+
+      nav {
+        order: 3;
+        width: 100%;
+        gap: 15px;
+      }
+
+      nav a {
+        font-size: 13px;
+      }
+
+      main {
+        padding: 45px 0 65px;
+      }
+
+      .hours {
+        padding: 25px;
+      }
+
+      .map-heading {
+        padding: 25px 25px 15px;
+      }
+
+      .map-actions {
+        padding: 20px 25px 25px;
+      }
+
+      .map-frame {
+        height: 320px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ÜST MENÜ -->
+
+  <header>
+    <div class="container navbar">
+
+      <a class="logo" href="index.html">
+        SOS <span>&</span> CO.
+      </a>
+
+      <nav>
+        <a href="index.html">Ana Sayfa</a>
+        <a href="menu.html">Menümüz</a>
+        <a href="hakkimizda.html">Hakkımızda</a>
+        <a href="iletisim.html" class="active">İletişim</a>
+      </nav>
+
+      <a class="btn" href="menu.html">
+        Menüyü İncele ↗
+      </a>
+
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- BAŞLIK -->
+
+    <section>
+      <div class="eyebrow">BİZE ULAŞIN</div>
+
+      <h1>İletişim<span>.</span></h1>
+
+      <p class="intro">
+        Sosun bol, lezzetin tam hali!
+        SOS & CO.'ya ulaşmak için
+        iletişim bilgilerimizi kullanabilir
+        veya haritadan yol tarifi alabilirsiniz.
+      </p>
+    </section>
+
+    <!-- İLETİŞİM BİLGİLERİ -->
+
+    <section class="cards">
+
+      <article class="card">
+        <div class="card-icon">📍</div>
+
+        <h2>Adresimiz</h2>
+
+        <p>
+          SOS & CO.<br>
+          Nivo İstanbul<br>
+          İnönü Mahallesi<br>
+          B Blok Sokak No:73<br>
+          34160 Küçükçekmece / İstanbul
+        </p>
+
+        <a
+          class="text-link"
+          href="https://www.google.com/maps/search/?api=1&amp;query=41.0262079%2C28.8067418"
+          target="_blank"
+          rel="noopener noreferrer">
+          Konumu Gör →
+        </a>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">📞</div>
+
+        <h2>Telefon</h2>
+
+        <p>
+          Sorularınız için bizi arayabilirsiniz.
+          <br><br>
+          0534 337 02 48
+        </p>
+
+        <a class="text-link" href="tel:+905343370248">
+          Hemen Ara →
+        </a>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🕒</div>
+
+        <h2>Çalışma Saatleri</h2>
+
+        <p>
+          Pazartesi – Cumartesi<br>
+          11:00 – 02:00<br><br>
+          Pazar: Kapalı
+        </p>
+
+        <a class="text-link" href="#calisma-saatleri">
+          Tüm Saatleri Gör →
+        </a>
+      </article>
+
+    </section>
+
+    <!-- ÇALIŞMA SAATLERİ -->
+
+    <section class="hours" id="calisma-saatleri">
+
+      <div class="eyebrow">NE ZAMAN AÇIĞIZ?</div>
+
+      <h2>Çalışma Saatlerimiz</h2>
+
+      <div class="hours-row">
+        <span>Pazartesi</span>
+        <span>11:00 – 02:00</span>
+      </div>
+
+      <div class="hours-row">
+        <span>Salı</span>
+        <span>11:00 – 02:00</span>
+      </div>
+
+      <div class="hours-row">
+        <span>Çarşamba</span>
+        <span>11:00 – 02:00</span>
+      </div>
+
+      <div class="hours-row">
+        <span>Perşembe</span>
+        <span>11:00 – 02:00</span>
+      </div>
+
+      <div class="hours-row">
+        <span>Cuma</span>
+        <span>11:00 – 02:00</span>
+      </div>
+
+      <div class="hours-row">
+        <span>Cumartesi</span>
+        <span>11:00 – 02:00</span>
+      </div>
+
+      <div class="hours-row closed">
+        <span>Pazar</span>
+        <span>Kapalı</span>
+      </div>
+
+      <p class="note">
+        Kapanış saati 02:00, gece yarısından
+        sonraki saati ifade eder.
+        Özel günlerde saatler değişebilir.
+      </p>
+
+    </section>
+
+    <!-- GOOGLE HARİTALAR -->
+
+    <section class="map-section" id="konum">
+
+      <div class="map-heading">
+        <div class="eyebrow">KONUMUMUZ</div>
+
+        <h2>Bizi Haritada Bulun</h2>
+
+        <p>
+          SOS & CO. — Nivo İstanbul,
+          İnönü Mahallesi, B Blok Sokak No:73,
+          Küçükçekmece / İstanbul.
+        </p>
+      </div>
+
+      <iframe
+        class="map-frame"
+        title="SOS & CO. Google Haritalar"
+        src="https://www.google.com/maps?q=41.0262079%2C28.8067418&amp;z=17&amp;output=embed"
+        width="100%"
+        height="420"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+
+      <div class="map-actions">
+
+        <a
+          class="btn"
+          href="https://www.google.com/maps/dir/?api=1&amp;destination=41.0262079%2C28.8067418"
+          target="_blank"
+          rel="noopener noreferrer">
+          📍 Yol Tarifi Al →
+        </a>
+
+        <a
+          class="outline-btn"
+          href="https://www.google.com/maps/search/?api=1&amp;query=41.0262079%2C28.8067418"
+          target="_blank"
+          rel="noopener noreferrer">
+          Haritada Aç
+        </a>
+
+        <a
+          class="outline-btn"
+          href="tel:+905343370248">
+          📞 Bizi Ara
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ALT BİLGİ -->
+
+  <footer>
+    <div class="container">
+
+      <a class="logo" href="index.html">
+        SOS <span>&</span> CO.
+      </a>
+
+      <p>Sosun bol, lezzetin tam hali!</p>
+
+      <p>
+        Nivo İstanbul, İnönü Mahallesi,<br>
+        B Blok Sokak No:73,<br>
+        Küçükçekmece / İstanbul
+      </p>
+
+      <p>
+        Telefon:
+        <a href="tel:+905343370248">
+          0534 337 02 48
+        </a>
+      </p>
+
+      <small>
+        © <span id="year"></span>
+        SOS & CO. Tüm hakları saklıdır.
+      </small>
+
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
+
+</body>
+</html>

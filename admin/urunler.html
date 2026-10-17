@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ürün Yönetimi | SOS & CO.</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #12110f;
+      color: #f7ead5;
+      font-family: Arial, sans-serif;
+    }
+    .container { max-width: 1100px; margin: auto; }
+    h1, h2 { color: #e99b45; }
+    a { color: #e99b45; }
+    .card {
+      background: #211e19;
+      border: 1px solid #453729;
+      border-radius: 15px;
+      padding: 24px;
+      margin: 22px 0;
+    }
+    label { display: block; margin: 14px 0 6px; }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      background: #12110f;
+      border: 1px solid #514538;
+      border-radius: 8px;
+      color: white;
+      font: inherit;
+    }
+    button {
+      background: #e99b45;
+      color: #17120c;
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 6px 6px 6px 0;
+    }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    .danger { background: #a83d32; color: white; }
+    .muted { color: #bdb2a4; }
+    .item {
+      border-top: 1px solid #453729;
+      padding: 16px 0;
+      min-height: 110px;
+    }
+    .item img {
+      width: 90px;
+      height: 75px;
+      object-fit: cover;
+      border-radius: 8px;
+      float: right;
+      margin-left: 12px;
+    }
+    #content { display: none; }
+    #message { min-height: 24px; color: #e99b45; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>SOS & CO. | Ürün Yönetimi</h1>
+  <p><a href="dashboard.html">← Yönetim paneline dön</a></p>
+  <p id="message">Yönetici yetkisi kontrol ediliyor...</p>
+
+  <div id="content">
+    <section class="card">
+      <h2 id="formTitle">Yeni Ürün Ekle</h2>
+
+      <form id="productForm">
+        <label for="name">Ürün adı</label>
+        <input id="name" required maxlength="150">
+
+        <label for="description">Açıklama</label>
+        <textarea id="description" rows="3"></textarea>
+
+        <label for="price">Fiyat (TL)</label>
+        <input id="price" type="number" min="0" step="0.01" required>
+
+        <label for="category">Kategori</label>
+        <select id="category" required>
+          <option value="Tavuk">Tavuk</option>
+          <option value="Pilav">Pilav</option>
+          <option value="Makarna">Makarna</option>
+          <option value="Meze">Meze</option>
+        </select>
+
+        <label for="photoFile">Bilgisayardan Ürün Fotoğrafı Seç</label>
+<input
+  type="file"
+  id="photoFile"
+  accept="image/jpeg,image/png,image/webp"
+>
+        <input id="imageUrl" type="url"
+               placeholder="https://ornek.com/fotograf.jpg">
+
+        <label>
+          <input id="available" type="checkbox" checked
+                 style="width:auto">
+          Ürün aktif (müşteriler görebilir)
+        </label>
+
+        <button id="saveButton" type="submit">Ürünü Kaydet</button>
+        <button id="cancelButton" type="button"
+                style="background:#555;color:white">
+          Temizle / İptal
+        </button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Mevcut Ürünler</h2>
+      <div id="products">Ürünler yükleniyor...</div>
+    </section>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://uhccplwhgdkusrpivole.supabase.co";
+
+  const SUPABASE_KEY = "sb_publishable_oIc7Fih4UJL4vUZ82wbzRA_5EaE05Dp";
+  const ADMIN_UID = "28cb229c-a890-44fd-9238-f677c5a3d200";
+
+  const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const message = document.getElementById("message");
+  const content = document.getElementById("content");
+  const form = document.getElementById("productForm");
+  const productsBox = document.getElementById("products");
+  const saveButton = document.getElementById("saveButton");
+
+  let editingId = null;
+
+  async function checkAdmin() {
+    try {
+      const { data, error } = await db.auth.getUser();
+
+      if (error || !data.user || data.user.id !== ADMIN_UID) {
+        location.replace("index.html");
+        return;
+      }
+
+      content.style.display = "block";
+      message.textContent = "";
+      await loadProducts();
+
+    } catch (error) {
+      message.textContent = "Bağlantı hatası: " + error.message;
+    }
+  }
+
+  async function loadProducts() {
+    productsBox.textContent = "Ürünler yükleniyor...";
+
+    const { data, error } = await db
+      .from("products")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      productsBox.textContent =
+        "Ürünler alınamadı: " + error.message;
+      return;
+    }
+
+    productsBox.replaceChildren();
+
+    if (!data || data.length === 0) {
+      productsBox.textContent = "Henüz ürün eklenmemiş.";
+      return;
+    }
+
+    data.forEach(product => {
+      const item = document.createElement("div");
+      item.className = "item";
+
+      if (product.image_url) {
+        const img = document.createElement("img");
+        img.src = product.image_url;
+        img.alt = product.name || "Ürün";
+        item.appendChild(img);
+      }
+
+      const title = document.createElement("h3");
+      title.textContent = product.name || "İsimsiz ürün";
+      item.appendChild(title);
+
+      const details = document.createElement("p");
+      details.className = "muted";
+
+      const price = Number(product.price || 0)
+        .toLocaleString("tr-TR", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+
+      details.textContent =
+        `${product.category || "Kategori yok"} • ` +
+        `${price} TL • ` +
+        (product.is_available ? "Aktif" : "Pasif");
+
+      item.appendChild(details);
+
+      if (product.description) {
+        const desc = document.createElement("p");
+        desc.textContent = product.description;
+        item.appendChild(desc);
+      }
+
+      const edit = document.createElement("button");
+      edit.textContent = "Düzenle";
+      edit.onclick = () => editProduct(product);
+      item.appendChild(edit);
+
+      const remove = document.createElement("button");
+      remove.textContent = "Sil";
+      remove.className = "danger";
+      remove.onclick = () => deleteProduct(product.id);
+      item.appendChild(remove);
+
+      productsBox.appendChild(item);
+    });
+  }
+
+  function editProduct(product) {
+    editingId = product.id;
+
+    document.getElementById("name").value =
+      product.name || "";
+
+    document.getElementById("description").value =
+      product.description || "";
+
+    document.getElementById("price").value =
+      product.price ?? "";
+
+    document.getElementById("category").value =
+      product.category || "Tavuk";
+
+    document.getElementById("imageUrl").value =
+      product.image_url || "";
+
+    document.getElementById("available").checked =
+      Boolean(product.is_available);
+
+    document.getElementById("formTitle").textContent =
+      "Ürünü Düzenle";
+
+    saveButton.textContent = "Değişiklikleri Kaydet";
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function resetForm() {
+    editingId = null;
+    form.reset();
+
+    document.getElementById("formTitle").textContent =
+      "Yeni Ürün Ekle";
+
+    saveButton.textContent = "Ürünü Kaydet";
+  }
+
+  document.getElementById("cancelButton").onclick = resetForm;
+
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    saveButton.disabled = true;
+    message.textContent = "Kaydediliyor...";
+
+    let uploadedImageUrl = document.getElementById("imageUrl").value.trim() || null;
+
+const photoFile = document.getElementById("photoFile").files[0];
+
+if (photoFile) {
+  const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+
+  if (!allowedTypes.includes(photoFile.type)) {
+    message.textContent = "Yalnızca JPG, PNG veya WebP fotoğraf yükleyebilirsin.";
+    saveButton.disabled = false;
+    return;
+  }
+
+  if (photoFile.size > 5 * 1024 * 1024) {
+    message.textContent = "Fotoğraf en fazla 5 MB olabilir.";
+    saveButton.disabled = false;
+    return;
+  }
+
+  message.textContent = "Fotoğraf yükleniyor...";
+
+  const extension = photoFile.name.split(".").pop().toLowerCase();
+  const fileName = `${crypto.randomUUID()}.${extension}`;
+
+  const { error: uploadError } = await db.storage
+    .from("urun-fotograflari")
+    .upload(fileName, photoFile, {
+      contentType: photoFile.type,
+      upsert: false
+    });
+
+  if (uploadError) {
+    message.textContent = "Fotoğraf yükleme hatası: " + uploadError.message;
+    saveButton.disabled = false;
+    return;
+  }
+
+  const { data: imageData } = db.storage
+    .from("urun-fotograflari")
+    .getPublicUrl(fileName);
+
+  uploadedImageUrl = imageData.publicUrl;
+}
+const product = {
+  name: document.getElementById("name").value.trim(),
+  description: document.getElementById("description").value.trim(),
+  price: Number(document.getElementById("price").value),
+  category: document.getElementById("category").value,
+  image_url: uploadedImageUrl,
+  is_available: document.getElementById("available").checked
+};
+
+    try {
+      let result;
+
+      if (editingId !== null) {
+        result = await db
+          .from("products")
+          .update(product)
+          .eq("id", editingId)
+          .select("id");
+      } else {
+        result = await db
+          .from("products")
+          .insert(product)
+          .select("id");
+      }
+
+      if (result.error) throw result.error;
+
+      if (!result.data || result.data.length === 0) {
+        throw new Error(
+          "Kayıt doğrulanamadı. Veritabanı izinlerini kontrol et."
+        );
+      }
+
+      resetForm();
+      message.textContent = "Ürün başarıyla kaydedildi!";
+      await loadProducts();
+
+    } catch (error) {
+      message.textContent =
+        "Kayıt hatası: " + error.message;
+      console.error("Supabase kayıt hatası:", error);
+    } finally {
+      saveButton.disabled = false;
+    }
+  });
+
+  async function deleteProduct(id) {
+    if (!confirm("Bu ürünü kalıcı olarak silmek istiyor musun?")) {
+      return;
+    }
+
+    const { data, error } = await db
+      .from("products")
+      .delete()
+      .eq("id", id)
+      .select("id");
+
+    if (error) {
+      message.textContent = "Silme hatası: " + error.message;
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      message.textContent = "Ürün silinemedi. Yetkileri kontrol et.";
+      return;
+    }
+
+    message.textContent = "Ürün silindi.";
+    await loadProducts();
+  }
+
+  checkAdmin();
+</script>
+
+</body>
+</html>

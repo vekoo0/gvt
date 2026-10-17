@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yönetici Girişi | SOS & CO.</title>
+
+  <style>
+    :root {
+      --bg: #12110f;
+      --card: #211e19;
+      --cream: #f7ead5;
+      --orange: #e99b45;
+      --muted: #bdb2a4;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: var(--bg);
+      color: var(--cream);
+      font-family: Arial, sans-serif;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 420px;
+      padding: 40px;
+      background: var(--card);
+      border: 1px solid #453729;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    }
+
+    .logo {
+      color: var(--orange);
+      font-size: 36px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 35px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 16px;
+      background: var(--bg);
+      color: white;
+      border: 1px solid #514538;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    input:focus {
+      outline: 1px solid var(--orange);
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background: var(--orange);
+      color: #17120c;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #f3b366;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    .message {
+      margin-top: 18px;
+      min-height: 20px;
+      color: var(--orange);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 25px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .back:hover {
+      color: var(--orange);
+    }
+
+    @media (max-width: 480px) {
+      .login-box {
+        padding: 28px 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="login-box">
+
+    <div class="logo">SOS & CO.</div>
+    <p class="subtitle">Yönetim Paneli</p>
+
+    <form id="loginForm">
+
+      <input
+        type="email"
+        id="email"
+        placeholder="E-posta adresiniz"
+        autocomplete="username"
+        required
+      >
+
+      <input
+        type="password"
+        id="password"
+        placeholder="Şifreniz"
+        autocomplete="current-password"
+        required
+      >
+
+      <button type="submit" id="loginButton">
+        Giriş Yap
+      </button>
+
+    </form>
+
+    <p class="message" id="message" role="status"></p>
+
+    <a class="back" href="../index.html">
+      ← Web Sitesine Dön
+    </a>
+
+  </main>
+
+  <!-- Supabase bağlantısı -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    // SUPABASE AYARLARI
+    // Yalnızca aşağıdaki iki bilgiyi değiştir.
+
+    
+const SUPABASE_URL = "https://uhccplwhgdkusrpivole.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_oIc7Fih4UJL4vUZ82wbzRA_5EaE05Dp";
+
+    // SOS & CO. yönetici kimliği
+    const ADMIN_UID =
+      "28cb229c-a890-44fd-9238-f677c5a3d200";
+
+    const form = document.getElementById("loginForm");
+    const message = document.getElementById("message");
+    const loginButton = document.getElementById("loginButton");
+
+    let supabaseClient;
+
+    try {
+      supabaseClient = supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+    } catch (error) {
+      message.textContent =
+        "Supabase ayarlarını kontrol edin.";
+    }
+
+    form.addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      if (
+        SUPABASE_URL === "BURAYA_PROJE_URL" ||
+        SUPABASE_KEY === "BURAYA_PUBLISHABLE_KEY"
+      ) {
+        message.textContent =
+          "Önce Supabase bağlantı bilgilerini ekleyin.";
+        return;
+      }
+
+      if (!supabaseClient) {
+        message.textContent =
+          "Supabase bağlantısı kurulamadı.";
+        return;
+      }
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      loginButton.disabled = true;
+      message.textContent = "Giriş kontrol ediliyor...";
+
+      try {
+        const { data, error } =
+          await supabaseClient.auth.signInWithPassword({
+            email,
+            password
+          });
+
+        if (error) {
+          message.textContent =
+            "Giriş başarısız. E-posta veya şifrenizi kontrol edin.";
+          return;
+        }
+
+        if (!data.user || data.user.id !== ADMIN_UID) {
+          await supabaseClient.auth.signOut();
+
+          message.textContent =
+            "Bu hesabın yönetici yetkisi bulunmuyor.";
+          return;
+        }
+
+        message.textContent =
+          "Giriş başarılı! SOS & CO. yönetimine hoş geldiniz.";
+          window.location.href = "dashboard.html";
+
+        // Ürün yönetim sayfasını sonraki adımda
+        // oluşturup buraya yönlendirme ekleyeceğiz.
+
+      } catch (error) {
+        message.textContent =
+          "Bağlantı hatası. İnternetinizi ve Supabase ayarlarını kontrol edin.";
+      } finally {
+        loginButton.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>

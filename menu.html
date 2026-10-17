@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menü | SOS & CO.</title>
+
+  <style>
+    :root {
+      --bg: #12110f;
+      --card: #211e19;
+      --cream: #f7ead5;
+      --orange: #e99b45;
+      --muted: #bdb2a4;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--cream);
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      padding: 22px 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid #383128;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 900;
+      color: var(--orange);
+      text-decoration: none;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    nav a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--orange);
+    }
+
+    .hero {
+      padding: 75px 20px 45px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 7vw, 65px);
+      margin: 0 0 15px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .categories {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 20px;
+    }
+
+    .categories button {
+      background: var(--card);
+      color: var(--cream);
+      border: 1px solid #4a3c2b;
+      border-radius: 30px;
+      padding: 12px 22px;
+      cursor: pointer;
+    }
+
+    .categories button.active,
+    .categories button:hover {
+      background: var(--orange);
+      color: #17120c;
+    }
+
+    .products {
+      max-width: 1150px;
+      margin: 30px auto 90px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(240px, 1fr)
+      );
+      gap: 25px;
+    }
+
+    .product {
+      background: var(--card);
+      border: 1px solid #393126;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .product img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-content {
+      padding: 22px;
+    }
+
+    .product h3 {
+      margin: 0 0 10px;
+    }
+
+    .product p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 44px;
+    }
+
+    .price {
+      display: block;
+      color: var(--orange);
+      font-weight: bold;
+      font-size: 20px;
+      margin-top: 15px;
+    }
+
+    .status {
+      text-align: center;
+      color: var(--muted);
+      padding: 30px 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      border-top: 1px solid #383128;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+      }
+
+      nav {
+        justify-content: center;
+        gap: 13px;
+      }
+
+      .hero {
+        padding-top: 45px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html" class="logo">SOS & CO.</a>
+
+  <nav>
+    <a href="index.html">Ana Sayfa</a>
+    <a href="menu.html" class="active">Menü</a>
+    <a href="hakkimizda.html">Hakkımızda</a>
+    <a href="iletisim.html">İletişim</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Lezzet Menümüz</h1>
+  <p>Sosun bol, lezzetin tam hali.</p>
+</section>
+
+<div class="categories">
+  <button class="active" data-filter="all">Tümü</button>
+  <button data-filter="tavuk">Tavuk</button>
+  <button data-filter="pilav">Pilav</button>
+  <button data-filter="makarna">Makarna</button>
+  <button data-filter="meze">Meze</button>
+</div>
+
+<p id="status" class="status">Menü yükleniyor...</p>
+
+<main class="products" id="productList"></main>
+
+<footer>
+  © SOS & CO. — Sosun bol, lezzetin tam hali.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  // SUPABASE BAĞLANTISI
+  const SUPABASE_URL =
+    "https://uhccplwhgdkusrpivole.supabase.co";
+
+  const SUPABASE_KEY = "sb_publishable_oIc7Fih4UJL4vUZ82wbzRA_5EaE05Dp";
+
+  const db = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  const productList =
+    document.getElementById("productList");
+
+  const statusText =
+    document.getElementById("status");
+
+  const buttons =
+    document.querySelectorAll(".categories button");
+
+  let allProducts = [];
+  let activeFilter = "all";
+
+  // Varsayılan ürün görselleri
+  const defaultImages = {
+    tavuk:
+      "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=800",
+    pilav:
+      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800",
+    makarna:
+      "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=800",
+    meze:
+      "https://images.unsplash.com/photo-1547592180-85f173990554?w=800"
+  };
+
+  // VERİTABANINDAN ÜRÜNLERİ ÇEK
+  async function loadMenu() {
+    statusText.textContent = "Menü yükleniyor...";
+
+    try {
+      const { data, error } = await db
+        .from("products")
+        .select(
+          "id, name, description, price, category, image_url"
+        )
+        .eq("is_available", true)
+        .order("created_at", {
+          ascending: false
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      allProducts = data || [];
+
+      renderProducts();
+
+    } catch (error) {
+      console.error("Menü yükleme hatası:", error);
+
+      statusText.textContent =
+        "Menü şu anda yüklenemiyor. Lütfen daha sonra tekrar deneyin.";
+    }
+  }
+
+  // ÜRÜNLERİ EKRANDA GÖSTER
+  function renderProducts() {
+    productList.replaceChildren();
+
+    const filteredProducts = allProducts.filter(product => {
+      const category = String(product.category || "")
+        .trim()
+        .toLocaleLowerCase("tr-TR");
+
+      return (
+        activeFilter === "all" ||
+        category === activeFilter
+      );
+    });
+
+    if (filteredProducts.length === 0) {
+      statusText.textContent =
+        "Bu kategoride henüz ürün bulunmuyor.";
+      return;
+    }
+
+    statusText.textContent = "";
+
+    filteredProducts.forEach(product => {
+      const category = String(product.category || "")
+        .trim()
+        .toLocaleLowerCase("tr-TR");
+
+      const article = document.createElement("article");
+      article.className = "product";
+
+      const img = document.createElement("img");
+
+      img.src =
+        product.image_url ||
+        defaultImages[category] ||
+        defaultImages.tavuk;
+
+      img.alt = product.name || "SOS & CO. Ürün";
+
+      img.onerror = function() {
+        this.onerror = null;
+        this.src =
+          defaultImages[category] ||
+          defaultImages.tavuk;
+      };
+
+      article.appendChild(img);
+
+      const content = document.createElement("div");
+      content.className = "product-content";
+
+      const title = document.createElement("h3");
+      title.textContent = product.name || "Ürün";
+
+      const description = document.createElement("p");
+      description.textContent =
+        product.description || "";
+
+      const price = document.createElement("span");
+      price.className = "price";
+
+      const amount = Number(product.price);
+
+      price.textContent = Number.isFinite(amount)
+        ? amount.toLocaleString("tr-TR", {
+            style: "currency",
+            currency: "TRY"
+          })
+        : "Fiyat bilgisi yok";
+
+      content.appendChild(title);
+      content.appendChild(description);
+      content.appendChild(price);
+
+      article.appendChild(content);
+      productList.appendChild(article);
+    });
+  }
+
+  // KATEGORİ BUTONLARI
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      buttons.forEach(b => {
+        b.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      activeFilter = button.dataset.filter;
+
+      renderProducts();
+    });
+  });
+
+  // SAYFA AÇILDIĞINDA MENÜYÜ YÜKLE
+  loadMenu();
+</script>
+
+</body>
+</html>
