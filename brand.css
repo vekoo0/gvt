@@ -9,7 +9,7 @@
   gap: calc(8px * var(--brand-scale));
   padding: calc(10px * var(--brand-scale));
   border-radius: 12px;
-  background: #fcf8f0;
+  background: transparent;
   line-height: 0;
   vertical-align: middle;
 }
@@ -34,3 +34,7 @@
 .site-footer .logo { --brand-scale: 1.05; }
 .login-box .logo { --brand-scale: 1; margin-inline: auto; }
 @media (max-width: 600px) { header .logo:has(.brand-wordmark) { --brand-scale: .74; } }
+
+/* The transparent mark sits directly on the dark page background. */
+.logo .brand-wordmark img { filter: brightness(0) invert(1); }
+.logo .brand-symbol img { filter: brightness(1.65); }
