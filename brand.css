@@ -1,7 +1,36 @@
-/* Original SOS & CO. artwork converted from the supplied PDF. */
-.logo:has(.brand-image) { display: inline-flex; align-items: center; flex-shrink: 0; line-height: 0; }
-.brand-image { display: block; width: 95px; height: auto; max-width: 100%; border-radius: 8px; }
-.site-footer .brand-image { width: 155px; }
-.login-box .logo { justify-content: center; width: 100%; }
-.login-box .brand-image { width: 170px; }
-@media (max-width: 600px) { header .brand-image { width: 76px; } }
+/* Present the original artwork as a compact horizontal brand lockup.
+   Each viewport preserves the source artwork's aspect ratio. */
+.logo:has(.brand-wordmark) {
+  --brand-scale: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: calc(8px * var(--brand-scale));
+  padding: calc(10px * var(--brand-scale));
+  border-radius: 12px;
+  background: #fcf8f0;
+  line-height: 0;
+  vertical-align: middle;
+}
+.brand-symbol, .brand-wordmark {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.brand-symbol { width: calc(58px * var(--brand-scale)); height: calc(54px * var(--brand-scale)); }
+.brand-wordmark { width: calc(146px * var(--brand-scale)); height: calc(38px * var(--brand-scale)); }
+.logo .brand-symbol img, .logo .brand-wordmark img {
+  position: absolute;
+  display: block;
+  max-width: none;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+}
+.logo .brand-symbol img { width: calc(94px * var(--brand-scale)); left: calc(-18px * var(--brand-scale)); top: calc(-19px * var(--brand-scale)); }
+.logo .brand-wordmark img { width: calc(180px * var(--brand-scale)); left: calc(-17px * var(--brand-scale)); top: calc(-138px * var(--brand-scale)); }
+.site-footer .logo { --brand-scale: 1.05; }
+.login-box .logo { --brand-scale: 1; margin-inline: auto; }
+@media (max-width: 600px) { header .logo:has(.brand-wordmark) { --brand-scale: .74; } }
