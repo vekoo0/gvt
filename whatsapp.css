@@ -1,0 +1,35 @@
+/* Shared WhatsApp order button. */
+.whatsapp-order {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border: 2px solid #ffffff38;
+  border-radius: 999px;
+  background: #075e42;
+  color: #fff;
+  font: 700 15px/1.3 Arial, sans-serif;
+  text-decoration: none;
+  box-shadow: 0 6px 24px #0005;
+  animation: whatsapp-pulse 3s ease-out infinite;
+  transition: transform .2s, background .2s;
+}
+.whatsapp-order svg { width: 28px; height: 28px; flex-shrink: 0; }
+.whatsapp-order:hover { background: #084c38; transform: translateY(-3px); }
+.whatsapp-order:focus-visible { outline: 3px solid #ffa52f; outline-offset: 5px; }
+@keyframes whatsapp-pulse {
+  0%, 65%, 100% { box-shadow: 0 6px 24px #0005, 0 0 0 0 #25d36600; }
+  15% { box-shadow: 0 6px 24px #0005, 0 0 0 0 #25d36660; }
+  50% { box-shadow: 0 6px 24px #0005, 0 0 0 14px #25d36600; }
+}
+body { padding-bottom: calc(90px + env(safe-area-inset-bottom)); }
+@media (max-width: 480px) {
+  .whatsapp-order { right: max(14px, env(safe-area-inset-right)); padding: 12px 16px; font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-order { animation: none; transition: none; }
+}
