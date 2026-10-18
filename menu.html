@@ -204,6 +204,8 @@
   <button data-filter="pilav"><span aria-hidden="true">🍚</span> Pilav</button>
   <button data-filter="makarna"><span aria-hidden="true">🍝</span> Makarna</button>
   <button data-filter="meze"><span aria-hidden="true">🥗</span> Meze</button>
+  <button data-filter="soguk-icecekler"><span aria-hidden="true">🥤</span> Soğuk İçecekler</button>
+  <button data-filter="sicak-icecekler"><span aria-hidden="true">☕</span> Sıcak İçecekler</button>
 </div>
 
 <p id="status" class="status">Menü yükleniyor...</p>
@@ -215,7 +217,7 @@
 <footer class="site-footer"><div class="site-wrap footer-grid">
 <div><a class="logo" href="index.html"><span class="brand-symbol" aria-hidden="true"><img src="assets/sosco-logo-transparent.png" alt="" width="1166" height="1349"></span><span class="brand-wordmark"><img src="assets/sosco-logo-transparent.png" alt="SOS &amp; CO. — Soslu Tavuk, Pilav, Makarna, Meze" width="1166" height="1349"></span></a><p>Sosun bol, lezzetin tam hali.</p><p>Soslu tavuk, pilav, makarna ve meze.<br>Tek kişilik molalardan kalabalık sofralara.</p><a class="footer-cta" href="toplu-yemek.html">Toplu yemek için teklif al ↗</a></div>
 <div><h2>Keşfet</h2><a href="hakkimizda.html">Hakkımızda</a><a href="blog.html">Lezzet Günlüğü</a><a href="index.html#mekanimiz">Mekânımız</a><a href="iletisim.html">İletişim</a></div>
-<div><h2>Menü &amp; organizasyon</h2><a href="menu.html?kategori=tavuk">Soslu Tavuk</a><a href="menu.html?kategori=pilav">Pilav</a><a href="menu.html?kategori=makarna">Makarna</a><a href="menu.html?kategori=meze">Meze</a><a href="toplu-yemek.html">İş yeri · Mevlüt yemeği · Düğün</a></div>
+<div><h2>Menü &amp; organizasyon</h2><a href="menu.html?kategori=tavuk">Soslu Tavuk</a><a href="menu.html?kategori=pilav">Pilav</a><a href="menu.html?kategori=makarna">Makarna</a><a href="menu.html?kategori=meze">Meze</a><a href="menu.html?kategori=soguk-icecekler">Soğuk İçecekler</a><a href="menu.html?kategori=sicak-icecekler">Sıcak İçecekler</a><a href="toplu-yemek.html">İş yeri · Mevlüt yemeği · Düğün</a></div>
 <div><h2>Bize ulaşın</h2><a href="tel:+905343370248">0534 337 02 48</a><p>Nivo İstanbul, İnönü Mahallesi<br>B Blok Sokak No:73<br>Küçükçekmece / İstanbul</p><p>Pazartesi – Cumartesi: 11:00 – 02:00<br>Pazar: Kapalı</p><a href="https://www.google.com/maps/search/?api=1&amp;query=41.0262079%2C28.8067418" target="_blank" rel="noopener noreferrer">Yol tarifi al ↗</a></div>
 </div><div class="site-wrap footer-bottom">© <span id="year"></span> SOS &amp; CO. · Tüm hakları saklıdır.<span>Birlikte daha lezzetli.</span></div></footer>
 
@@ -244,7 +246,7 @@
 
   let allProducts = [];
   const requestedFilter = new URLSearchParams(window.location.search).get("kategori");
-  let activeFilter = ["tavuk", "pilav", "makarna", "meze"].includes(requestedFilter) ? requestedFilter : "all";
+  let activeFilter = ["tavuk", "pilav", "makarna", "meze", "soguk-icecekler", "sicak-icecekler"].includes(requestedFilter) ? requestedFilter : "all";
   buttons.forEach(button => {
     button.classList.toggle("active", button.dataset.filter === activeFilter);
     button.setAttribute("aria-pressed", String(button.dataset.filter === activeFilter));
@@ -252,6 +254,8 @@
 
   // Varsayılan ürün görselleri
   const defaultImages = {
+    "soguk-icecekler": "assets/soguk-icecekler.svg",
+    "sicak-icecekler": "assets/sicak-icecekler.svg",
     tavuk:
       "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=800",
     pilav:
@@ -293,14 +297,19 @@
     }
   }
 
+  function categoryKey(value) {
+    const key = String(value || "").trim().toLocaleLowerCase("tr-TR");
+    if (["soğuk içecekler", "soguk-icecekler"].includes(key)) return "soguk-icecekler";
+    if (["sıcak içecekler", "sicak-icecekler"].includes(key)) return "sicak-icecekler";
+    return key;
+  }
+
   // ÜRÜNLERİ EKRANDA GÖSTER
   function renderProducts() {
     productList.replaceChildren();
 
     const filteredProducts = allProducts.filter(product => {
-      const category = String(product.category || "")
-        .trim()
-        .toLocaleLowerCase("tr-TR");
+      const category = categoryKey(product.category);
 
       return (
         activeFilter === "all" ||
@@ -317,9 +326,7 @@
     statusText.textContent = "";
 
     filteredProducts.forEach(product => {
-      const category = String(product.category || "")
-        .trim()
-        .toLocaleLowerCase("tr-TR");
+      const category = categoryKey(product.category);
 
       const article = document.createElement("article");
       article.className = "product";

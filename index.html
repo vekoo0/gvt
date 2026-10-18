@@ -505,7 +505,7 @@ footer p { line-height:1.8; }
 <footer class="site-footer"><div class="site-wrap footer-grid">
 <div><a class="logo" href="index.html"><span class="brand-symbol" aria-hidden="true"><img src="assets/sosco-logo-transparent.png" alt="" width="1166" height="1349"></span><span class="brand-wordmark"><img src="assets/sosco-logo-transparent.png" alt="SOS &amp; CO. — Soslu Tavuk, Pilav, Makarna, Meze" width="1166" height="1349"></span></a><p>Sosun bol, lezzetin tam hali.</p><p>Soslu tavuk, pilav, makarna ve meze.<br>Tek kişilik molalardan kalabalık sofralara.</p><a class="footer-cta" href="toplu-yemek.html">Toplu yemek için teklif al ↗</a></div>
 <div><h2>Keşfet</h2><a href="hakkimizda.html">Hakkımızda</a><a href="blog.html">Lezzet Günlüğü</a><a href="index.html#mekanimiz">Mekânımız</a><a href="iletisim.html">İletişim</a></div>
-<div><h2>Menü &amp; organizasyon</h2><a href="menu.html?kategori=tavuk">Soslu Tavuk</a><a href="menu.html?kategori=pilav">Pilav</a><a href="menu.html?kategori=makarna">Makarna</a><a href="menu.html?kategori=meze">Meze</a><a href="toplu-yemek.html">İş yeri · Mevlüt yemeği · Düğün</a></div>
+<div><h2>Menü &amp; organizasyon</h2><a href="menu.html?kategori=tavuk">Soslu Tavuk</a><a href="menu.html?kategori=pilav">Pilav</a><a href="menu.html?kategori=makarna">Makarna</a><a href="menu.html?kategori=meze">Meze</a><a href="menu.html?kategori=soguk-icecekler">Soğuk İçecekler</a><a href="menu.html?kategori=sicak-icecekler">Sıcak İçecekler</a><a href="toplu-yemek.html">İş yeri · Mevlüt yemeği · Düğün</a></div>
 <div><h2>Bize ulaşın</h2><a href="tel:+905343370248">0534 337 02 48</a><p>Nivo İstanbul, İnönü Mahallesi<br>B Blok Sokak No:73<br>Küçükçekmece / İstanbul</p><p>Pazartesi – Cumartesi: 11:00 – 02:00<br>Pazar: Kapalı</p><a href="https://www.google.com/maps/search/?api=1&amp;query=41.0262079%2C28.8067418" target="_blank" rel="noopener noreferrer">Yol tarifi al ↗</a></div>
 </div><div class="site-wrap footer-bottom">© <span id="year"></span> SOS &amp; CO. · Tüm hakları saklıdır.<span>Birlikte daha lezzetli.</span></div></footer>
 
@@ -610,6 +610,8 @@ if ("IntersectionObserver" in window && !reduceMotion) {
 const productsContainer = document.getElementById("products");
 
 const defaultImages = {
+  "soguk-icecekler": "assets/soguk-icecekler.svg",
+  "sicak-icecekler": "assets/sicak-icecekler.svg",
   tavuk:
     "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=700&q=80",
   pilav:
@@ -624,6 +626,8 @@ function getDefaultImage(category) {
   const key = String(category || "")
     .toLocaleLowerCase("tr-TR");
 
+  if (key.includes("soğuk") || key === "soguk-icecekler") return defaultImages["soguk-icecekler"];
+  if (key.includes("sıcak") || key === "sicak-icecekler") return defaultImages["sicak-icecekler"];
   if (key.includes("tavuk")) return defaultImages.tavuk;
   if (key.includes("pilav")) return defaultImages.pilav;
   if (key.includes("makarna")) return defaultImages.makarna;
