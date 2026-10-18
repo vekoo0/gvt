@@ -362,7 +362,11 @@ footer p { line-height:1.8; }
 
 <main>
 <section class="catering-spotlight" aria-labelledby="spotlight-title">
-  <img class="spotlight-photo" src="mekan2.jpg" alt="SOS &amp; CO. restoranında yemek tezgâhı" width="1600" height="1200" fetchpriority="high">
+  <div class="spotlight-slides" aria-hidden="true">
+    <img class="spotlight-photo is-active" src="assets/hero/soslu-makarna.jpg" alt="" width="1600" height="1068" fetchpriority="high">
+    <img class="spotlight-photo" src="assets/hero/tavuk-pilav.png" alt="" decoding="async">
+    <img class="spotlight-photo" src="assets/hero/mezeler.png" alt="" decoding="async">
+  </div>
   <div class="spotlight-shade" aria-hidden="true"></div>
   <div class="site-wrap spotlight-content">
     <span class="kicker">SOS &amp; CO. · İSTANBUL TOPLU YEMEK</span>
@@ -378,6 +382,17 @@ footer p { line-height:1.8; }
       <a href="toplu-yemek.html?hizmet=D%C3%BC%C4%9F%C3%BCn+%2F+ni%C5%9Fan#teklif">Düğün &amp; nişan</a>
     </div>
   </div>
+  <div class="spotlight-controls" role="group" aria-label="Yemek görselleri">
+    <button type="button" data-spotlight-prev aria-label="Önceki yemek görseli">‹</button>
+    <div class="spotlight-dots">
+      <button type="button" data-spotlight-index="0" aria-label="Soslu makarna görseli" aria-pressed="true"></button>
+      <button type="button" data-spotlight-index="1" aria-label="Tavuk pilav görseli" aria-pressed="false"></button>
+      <button type="button" data-spotlight-index="2" aria-label="Meze görseli" aria-pressed="false"></button>
+    </div>
+    <button type="button" data-spotlight-next aria-label="Sonraki yemek görseli">›</button>
+    <button type="button" data-spotlight-pause aria-label="Otomatik görsel geçişini duraklat" aria-pressed="false">Ⅱ</button>
+  </div>
+  <span class="spotlight-image-label">Soslu makarna · Temsili görsel</span>
   <a class="spotlight-explore" href="#lezzetler">Menümüzü de keşfedin <span aria-hidden="true">↓</span></a>
 </section>
 

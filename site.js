@@ -59,3 +59,39 @@ if (cateringForm) {
     window.location.assign("https://wa.me/905343370248?text=" + encodeURIComponent(message));
   });
 }
+
+// Catering hero: local food images, a 4-second cycle and user controls.
+const spotlight = document.querySelector(".catering-spotlight");
+if (spotlight) {
+  const photos = [...spotlight.querySelectorAll(".spotlight-photo")];
+  const dots = [...spotlight.querySelectorAll("[data-spotlight-index]")];
+  const pauseButton = spotlight.querySelector("[data-spotlight-pause]");
+  const caption = spotlight.querySelector(".spotlight-image-label");
+  const names = ["Soslu makarna", "Tavuk pilav", "Mezeler"];
+  const motion = matchMedia("(prefers-reduced-motion: reduce)");
+  let index = 0;
+  let paused = motion.matches;
+  let timer;
+  function show(next) {
+    index = (next + photos.length) % photos.length;
+    photos.forEach((photo, i) => photo.classList.toggle("is-active", i === index));
+    dots.forEach((dot, i) => dot.setAttribute("aria-pressed", String(i === index)));
+    caption.textContent = names[index] + " · Temsili görsel";
+  }
+  function restart() {
+    clearInterval(timer);
+    if (!paused && !document.hidden) timer = setInterval(() => show(index + 1), 4000);
+    pauseButton.setAttribute("aria-pressed", String(paused));
+    pauseButton.setAttribute("aria-label", paused ? "Otomatik görsel geçişini başlat" : "Otomatik görsel geçişini duraklat");
+    pauseButton.textContent = paused ? "▶" : "Ⅱ";
+  }
+  dots.forEach((dot, i) => dot.addEventListener("click", () => { show(i); restart(); }));
+  spotlight.querySelector("[data-spotlight-prev]").addEventListener("click", () => { show(index - 1); restart(); });
+  spotlight.querySelector("[data-spotlight-next]").addEventListener("click", () => { show(index + 1); restart(); });
+  pauseButton.addEventListener("click", () => { paused = !paused; restart(); });
+  motion.addEventListener("change", () => { paused = motion.matches; restart(); });
+  document.addEventListener("visibilitychange", restart);
+  photos.forEach(photo => photo.addEventListener("error", () => { photo.src = "mekan2.jpg"; }, { once: true }));
+  show(0);
+  restart();
+}

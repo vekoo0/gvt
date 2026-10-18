@@ -85,3 +85,18 @@
 @keyframes spotlight-drift{from{transform:scale(1)}to{transform:scale(1.055)}}
 @keyframes spotlight-enter{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:600px){.catering-spotlight{min-height:620px}.spotlight-content{padding-block:45px 75px}.spotlight-content h1{font-size:clamp(37px,9vw,48px);letter-spacing:-1px}.spotlight-content>p{font-size:15px}.spotlight-shade{background:linear-gradient(90deg,#090908eb,#09090899),linear-gradient(0deg,#090908a0,transparent)}.spotlight-photo{object-position:60% center}.spotlight-actions{align-items:stretch;flex-direction:column;max-width:360px}.spotlight-secondary{justify-content:center}.spotlight-services{gap:10px 15px}.spotlight-services a{font-size:12px}}
+
+/* Four-second food slideshow in the photo hero. */
+.spotlight-slides{position:absolute;inset:0;z-index:-3;overflow:hidden}
+.spotlight-slides .spotlight-photo{z-index:auto;opacity:0;transition:opacity .9s ease;animation:none;object-position:center}
+.spotlight-slides .spotlight-photo.is-active{opacity:1}
+.spotlight-controls{position:absolute;bottom:22px;right:4%;display:flex;align-items:center;gap:9px}
+.spotlight-controls>button{display:grid;place-items:center;width:38px;height:38px;background:#13100c99;color:#fff0d5;border:1px solid #ffffff60;border-radius:50%;font-size:22px;cursor:pointer}
+.spotlight-controls>button:hover{border-color:var(--orange);background:#402b16}
+.spotlight-controls [data-spotlight-pause]{font-size:14px}
+.spotlight-dots{display:flex;align-items:center;gap:8px}
+.spotlight-dots button{position:relative;border:0;background:transparent;padding:0;width:24px;height:38px;cursor:pointer}
+.spotlight-dots button::after{content:"";display:block;width:9px;height:9px;margin:auto;background:#ffffff70;border-radius:9px;transition:background .2s,width .2s}
+.spotlight-dots button[aria-pressed="true"]::after{background:var(--orange);width:23px}
+.spotlight-image-label{position:absolute;left:4%;bottom:26px;color:#e5d4bb;font-size:11px;background:#09090880;padding:5px 8px;border-radius:5px}
+@media(max-width:760px){.spotlight-content{padding-bottom:110px}.spotlight-explore{display:none}.spotlight-controls{bottom:17px}.spotlight-image-label{bottom:66px}.spotlight-slides .spotlight-photo{object-position:65% center}}
