@@ -62,3 +62,26 @@
 .platform-caption { font-size: 14px; }
 .platform-pending:has(.platform-artwork) { opacity: 1; }
 @media (max-width: 480px) { .platform-artwork { min-height: 92px; padding: 12px 8px; } .platform-artwork img { height: 64px; } .platform-trendyol .platform-artwork img { height: 82px; } }
+
+/* Photo-led catering callout at the top of the homepage. */
+.catering-spotlight{position:relative;isolation:isolate;min-height:640px;display:flex;align-items:center;overflow:hidden;background:#17130f;border-bottom:1px solid #ffa52f40}
+.spotlight-photo{position:absolute;inset:0;z-index:-3;width:100%;height:100%;object-fit:cover;object-position:center 55%;animation:spotlight-drift 18s ease-in-out infinite alternate}
+.spotlight-shade{position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,#090908f5 0%,#090908da 33%,#09090866 65%,#09090822 100%),linear-gradient(0deg,#090908aa,transparent 35%)}
+.spotlight-content{padding-block:65px 95px;animation:spotlight-enter .8s ease both}
+.spotlight-content .kicker{display:block;color:#ffc06c;letter-spacing:2px;line-height:1.8}
+.spotlight-content h1{font:500 clamp(40px,4.8vw,68px)/1.12 Georgia,serif;letter-spacing:-1.5px;margin:20px 0 24px;color:#fff5e6;max-width:800px}
+.spotlight-content h1 span{color:#ffb64c}
+.spotlight-content>p{max-width:565px;font-size:17px;line-height:1.85;color:#eee0cd;margin:0}
+.spotlight-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:30px}
+.spotlight-actions .feature-button{border-radius:9px;padding:18px 24px;box-shadow:0 8px 30px #ffa52f20}
+.spotlight-secondary{display:inline-flex;padding:17px 22px;border:1px solid #ffffff70;border-radius:9px;background:#15110c40;color:#fff;transition:background .2s}
+.spotlight-secondary:hover{background:#ffffff18}
+.spotlight-services{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:30px}
+.spotlight-services a{font-size:13px;color:#f1ddbf;border-bottom:1px solid #ffffff30;padding-bottom:6px}
+.spotlight-services a:hover{color:#ffc06c;border-color:#ffc06c}
+.spotlight-explore{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:14px;align-items:center;color:#f1ddbf;font-size:12px;white-space:nowrap}
+.spotlight-explore span{font-size:20px}
+.home-intro-title{font-size:clamp(45px,7vw,80px);line-height:1.04;letter-spacing:-3px;margin:18px 0}.home-intro-title span{color:var(--orange)}
+@keyframes spotlight-drift{from{transform:scale(1)}to{transform:scale(1.055)}}
+@keyframes spotlight-enter{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.catering-spotlight{min-height:620px}.spotlight-content{padding-block:45px 75px}.spotlight-content h1{font-size:clamp(37px,9vw,48px);letter-spacing:-1px}.spotlight-content>p{font-size:15px}.spotlight-shade{background:linear-gradient(90deg,#090908eb,#09090899),linear-gradient(0deg,#090908a0,transparent)}.spotlight-photo{object-position:60% center}.spotlight-actions{align-items:stretch;flex-direction:column;max-width:360px}.spotlight-secondary{justify-content:center}.spotlight-services{gap:10px 15px}.spotlight-services a{font-size:12px}}
