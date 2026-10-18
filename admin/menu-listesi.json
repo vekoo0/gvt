@@ -1,0 +1,250 @@
+[
+  {
+    "name": "Sade Pirinç Pilav",
+    "price": 180,
+    "description": "Tereyağı, pirinç pilavı",
+    "category": "Pilav",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Tavuklu Pilav",
+    "price": 180,
+    "description": "Klasik tereyağlı pirinç pilavı üzerine özenle tiftiklenmiş haşlanmış tavuk parçaları ve haşlanmış koçbaşı nohut eklenerek hazırlanan geleneksel lezzet.",
+    "category": "Pilav",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Köri Soslu Tavuklu Pilav",
+    "price": 250,
+    "description": "Geleneksel tereyağlı pirinç pilavı, aromatik köri baharatı ve hafif krema sosuyla lezzetlendirilmiş sote tavuk parçalarıyla buluşuyor. Yalın ve doyurucu bir lezzet sunumu.",
+    "category": "Pilav",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Barbekü Soslu Tavuklu Pilav",
+    "price": 250,
+    "description": "Geleneksel pirinç pilavı, özel barbekü sosunda sote edilerek lezzetlendirilen tavuk göğsü parçalarıyla buluşuyor. Doyurucu ve karamelize lezzet sevenler için yalın sunum.",
+    "category": "Pilav",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Kremalı Mantarlı Tavuklu Pilav",
+    "price": 250,
+    "description": "Geleneksel tereyağlı pirinç pilavı, taze kültür mantarları ve sotelenmiş tavuk göğsünün kadifemsi krema sosuyla pişirilmesiyle hazırlanan doyurucu ve kıvamında bir lezzet.",
+    "category": "Pilav",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Kremalı Kekikli Tavuklu Pilav",
+    "price": 250,
+    "description": "Tereyağlı pirinç pilavı, tavuk, dağ kekiği, krema sosu",
+    "category": "Pilav",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Köri Soslu Tavuklu Makarna",
+    "price": 350,
+    "description": "Tavuk göğsü, kremalı özel köri sos, penne makarna",
+    "category": "Makarna",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Barbekü Soslu Tavuklu Makarna",
+    "price": 350,
+    "description": "Nefis dumanlı barbekü aromalı özel sosumuzla harmanlanmış tavuk göğsü parçaları ve penne makarna. Yalnızca sos ve tavuk lezzetine odaklanan sade sunumuyla.",
+    "category": "Makarna",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Kremalı Mantarlı Tavuklu Makarna",
+    "price": 350,
+    "description": "Taze tavuk göğsü parçalarının hafif sıvı krema ile sote edilerek penne makarna ile buluştuğu yalın lezzet. Sebzesiz ve hafif kremalı sos tercih edenler için idealdir.",
+    "category": "Makarna",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Kremalı Kekikli Tavuklu Makarna",
+    "price": 350,
+    "description": "Krema sos, penne makarna, sotelenmiş tavuk göğsü, mantar, kekik baharatı",
+    "category": "Makarna",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Havuç Tarator (200 g)",
+    "price": 240,
+    "description": "Süzme yoğurt, havuç, sarımsak, ceviz, zeytinyağı",
+    "category": "Meze",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Şakşuka (200 g)",
+    "price": 240,
+    "description": "Zeytinyağı, patlıcan, biber, sarımsak, domates, özel sos",
+    "category": "Meze",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Kuru Cacık (200 Gr.)",
+    "price": 240,
+    "description": "Süzme yoğurt, salatalık, sarımsak",
+    "category": "Meze",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Atom (200 Gr.)",
+    "price": 240,
+    "description": "Yoğurt, acı biber, ceviz",
+    "category": "Meze",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Zeytinyağlı Yaprak Sarması (200 Gr.)",
+    "price": 250,
+    "description": "Taze asma yaprağı, özel baharatlı pirinç harcı, sızma zeytinyağı",
+    "category": "Meze",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Zeytinyağlı Kuru Patlıcan Dolması (200 g)",
+    "price": 260,
+    "description": "Kurutulmuş patlıcanlara; nar ekşisi, baharatlı zeytinyağlı iç harç",
+    "category": "Meze",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Pepsi Zero Sugar (1 l)",
+    "price": 130,
+    "description": "Pepsi Zero Sugar 1 litre pet şişede sunulan ferah ve lezzetli içecek. Şeker içermeyen formülü ile sağlıklı seçim yapabilirsiniz.",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Pepsi (33 cl)",
+    "price": 95,
+    "description": "Kutu içecek",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Pepsi Zero Sugar (33 cl)",
+    "price": 95,
+    "description": "Kutu içecek",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "7UP (33 cl)",
+    "price": 95,
+    "description": "Kutu içecek",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Yedigün (33 cl)",
+    "price": 95,
+    "description": "Kutu içecek",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Lipton Ice Tea Şeftali",
+    "price": 95,
+    "description": "Lipton Ice Tea Şeftali, taze şeftali aromasıyla hazırlanmış serinletici bir içecektir. Doğal şeftali tatı ve çayın lezzetli kombinasyonu ile sıcak günlerde mükemmel bir seçimdir.",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Yedigün (1 l)",
+    "price": 130,
+    "description": "Pet şişe",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Doğanay Gurme Acılı Şalgam (1Lt)",
+    "price": 130,
+    "description": "Doğanay Gurme Acılı Şalgam, geleneksel tarif ile hazırlanan, taze şalgamdan elde edilen lezzetli bir içecektir. Baharatlı ve hafif acı tadı ile serinletici bir içecek olup, özellikle yemeklerle eşlik etmek için ideal bir seçimdir. Doğal malzemelerden üretilen bu 1 litrelik şişe, her an tüketilmeye hazırdır.",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Pepsi (1 l)",
+    "price": 130,
+    "description": "Pet şişe",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Ateşoğlu Ayran (28 cl)",
+    "price": 70,
+    "description": "Büyük boy",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Doğanay Gurme Acısız Şalgam (1Lt)",
+    "price": 130,
+    "description": "Doğanay Gurme Acısız Şalgam, geleneksel tarif ile hazırlanan, lezzetli ve ferahlatıcı bir içecektir. Doğal malzemelerden üretilen bu şalgam, her an taze ve soğuk olarak içilebilir. Aile ve arkadaşlarla paylaşmak için ideal bir seçimdir.",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Ateşoğlu Ayran (18 cl)",
+    "price": 65,
+    "description": "Küçük boy",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Uludağ Premium Su (40 cl)",
+    "price": 50,
+    "description": "Pet şişe",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Sade Soda (20 cl)",
+    "price": 60,
+    "description": "Cam şişe",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  },
+  {
+    "name": "Limonlu Soda (20 cl)",
+    "price": 65,
+    "description": "Cam şişe",
+    "category": "Soğuk İçecekler",
+    "image_url": "",
+    "is_available": true
+  }
+]
