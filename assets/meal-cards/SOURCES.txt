@@ -1,0 +1,10 @@
+Meal-card brand logos downloaded on 2026-10-27.
+Source mirror: https://github.com/dagdelenbatu14-pixel/mahalle-doner-menu
+Commit: 33fa32e479a73582b1c6d9c436391e509895e8de
+Original directory: images/kartlar/
+edenred.png: ticket-restaurant.png (Edenred / Ticket Restaurant)
+pluxee.svg: pluxee.svg
+multinet.svg: multinet.svg
+setcard.svg: setcard.svg
+metropol.svg: metropol-card.svg
+Brand marks belong to their respective owners.

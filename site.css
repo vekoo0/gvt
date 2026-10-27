@@ -100,3 +100,15 @@
 .spotlight-dots button[aria-pressed="true"]::after{background:var(--orange);width:23px}
 .spotlight-image-label{position:absolute;left:4%;bottom:26px;color:#e5d4bb;font-size:11px;background:#09090880;padding:5px 8px;border-radius:5px}
 @media(max-width:760px){.spotlight-content{padding-bottom:110px}.spotlight-explore{display:none}.spotlight-controls{bottom:17px}.spotlight-image-label{bottom:66px}.spotlight-slides .spotlight-photo{object-position:65% center}}
+
+/* Meal card logos are local assets so payment information does not depend on third-party requests. */
+.meal-payments{display:block}
+.meal-payment-intro p{max-width:700px}
+.meal-card-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:22px;width:100%}
+.meal-card-list>a{min-width:0;padding:16px;gap:12px}
+.meal-logo{display:flex;align-items:center;justify-content:center;background:#fff;border-radius:10px;padding:14px;height:90px;width:100%}
+.meal-logo img{display:block;width:100%;height:100%;object-fit:contain}
+.meal-card-list .meal-name{font-size:18px}
+.meal-card-list>a>span:last-child{max-width:none}
+@media(max-width:950px){.meal-card-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){.meal-card-list{grid-template-columns:repeat(2,minmax(0,1fr))}.meal-card-list>a{padding:12px}.meal-logo{height:80px;padding:12px}}
