@@ -307,19 +307,13 @@
     try {
       const { data, error } = await db
         .from("products")
-        .select(
-          "id, name, description, price, category, image_url"
-        )
-        .eq("is_available", true)
-        .order("created_at", {
-          ascending: false
-        });
+        .select("*");
 
       if (error) {
         throw error;
       }
 
-      allProducts = data || [];
+      allProducts = (data || []).filter(product => product.is_available !== false);
 
       renderProducts();
 
@@ -332,9 +326,21 @@
   }
 
   function categoryKey(value) {
-    const key = String(value || "").trim().toLocaleLowerCase("tr-TR");
-    if (["soğuk içecekler", "soguk-icecekler"].includes(key)) return "soguk-icecekler";
-    if (["sıcak içecekler", "sicak-icecekler"].includes(key)) return "sicak-icecekler";
+    const key = String(value || "")
+      .trim()
+      .toLocaleLowerCase("tr-TR")
+      .replaceAll("ı", "i")
+      .replaceAll("ş", "s")
+      .replaceAll("ğ", "g")
+      .replaceAll("ü", "u")
+      .replaceAll("ö", "o")
+      .replaceAll("ç", "c")
+      .replace(/\\s+/g, " ");
+
+    if (["tavuk", "soslu tavuk", "tavuklu", "tavuk yemekleri"].includes(key)) return "tavuk";
+    if (["soguk icecekler", "soguk-icecekler"].includes(key)) return "soguk-icecekler";
+    if (["sicak icecekler", "sicak-icecekler"].includes(key)) return "sicak-icecekler";
+    if (["mezeler", "meze cesitleri"].includes(key)) return "meze";
     return key;
   }
 
