@@ -89,10 +89,13 @@
       cursor: pointer;
     }
 
-    .categories button.active,
-    .categories button:hover {
+    .categories button.active {
       background: var(--orange);
       color: #17120c;
+    }
+
+    @media (hover: hover) {
+      .categories button:not(.active):hover { border-color: var(--orange); }
     }
 
     .products {
@@ -125,8 +128,9 @@
       padding: 22px;
     }
 
-    .product h3 {
+    .product h2 {
       margin: 0 0 10px;
+      font-size: 1.17rem;
     }
 
     .product p {
@@ -157,19 +161,171 @@
       color: var(--muted);
     }
 
-    @media (max-width: 600px) {
-      header {
+    .menu-kicker, .menu-filter-label { display: none; }
+
+    .menu-header a:focus-visible,
+    .categories button:focus-visible {
+      outline: 2px solid var(--cream);
+      outline-offset: 3px;
+    }
+
+    .status:empty { padding: 0; margin: 0; }
+
+    @media (max-width: 640px) {
+      .menu-header {
         flex-direction: column;
+        gap: 2px;
+        padding: 4px 16px 8px;
       }
 
-      nav {
+      .menu-header nav {
         justify-content: center;
-        gap: 13px;
+        gap: 0 4px;
+      }
+
+      .menu-header nav a {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        padding-inline: 8px;
+        font-size: 13px;
+      }
+
+      .menu-header nav a.active {
+        text-decoration: underline;
+        text-underline-offset: .4em;
+      }
+
+      .menu-catalog {
+        --menu-gutter: clamp(14px, 4.5vw, 28px);
+        --menu-gold: #ffb85f;
       }
 
       .hero {
-        padding-top: 45px;
+        display: grid;
+        align-content: end;
+        min-height: 232px;
+        padding: 32px var(--menu-gutter) 26px;
+        text-align: left;
+        background-color: #321d11;
+        background-image: linear-gradient(90deg, #21130cf5 10%, #21130cbc 48%, #21130c1a 100%), url('assets/hero/soslu-makarna.jpg');
+        background-size: cover;
+        background-position: center, center 58%;
+        border-bottom: 2px solid var(--menu-gold);
       }
+
+      .menu-kicker, .menu-filter-label {
+        color: var(--menu-gold);
+        font-size: .6875rem;
+        font-weight: 800;
+        letter-spacing: .14em;
+      }
+
+      .menu-kicker { display: block; }
+
+      .hero h1 {
+        margin: 8px 0;
+        font: 700 clamp(2.625rem, 11vw, 4.25rem)/.98 Georgia, serif;
+        letter-spacing: -.055em;
+      }
+
+      .hero h1 span { display: block; color: var(--menu-gold); }
+
+      .hero p {
+        margin: 0;
+        color: var(--cream);
+        font-size: .875rem;
+      }
+
+      .menu-filters {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: var(--bg);
+        border-bottom: 1px solid #4a3c2b;
+      }
+
+      .menu-filter-label {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        margin: 0;
+        padding: 12px var(--menu-gutter) 0;
+      }
+
+      .menu-filter-hint {
+        color: var(--muted);
+        letter-spacing: .02em;
+      }
+
+      .categories {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        gap: 8px;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        padding: 8px var(--menu-gutter) 10px;
+        scroll-padding-inline: var(--menu-gutter);
+        scrollbar-width: thin;
+        scrollbar-color: #86613b var(--bg);
+      }
+
+      .categories button {
+        flex: none;
+        min-height: 44px;
+        padding: 8px 14px;
+        font: 700 .875rem/1.2 Arial, sans-serif;
+        white-space: nowrap;
+      }
+
+      .categories button.active { background: var(--menu-gold); }
+
+      .products {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+        margin: 16px auto 32px;
+        padding-inline: var(--menu-gutter);
+      }
+
+      .products:empty { margin: 0; }
+
+      .product {
+        display: grid;
+        grid-template-columns: clamp(80px, 27vw, 148px) minmax(0, 1fr);
+        border-radius: 14px;
+      }
+
+      .product-photo {
+        position: relative;
+        min-height: 104px;
+        background: #34261b;
+      }
+
+      .product img { position: absolute; inset: 0; height: 100%; }
+
+      .product-content { padding: 12px; overflow-wrap: anywhere; }
+      .product h2 { margin: 0; font-size: 1rem; line-height: 1.25; }
+      .product p { margin: 4px 0 0; min-height: 0; font-size: .8125rem; line-height: 1.4; }
+
+      .price {
+        display: inline-block;
+        margin-top: 8px;
+        padding: 4px 8px;
+        border-radius: 6px;
+        background: #3e2b19;
+        color: var(--menu-gold);
+        font-size: .875rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .menu-header nav {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        width: 100%;
+      }
+
+      .menu-header nav a { justify-content: center; text-align: center; }
     }
   </style>
 <link rel="stylesheet" href="whatsapp.css">
@@ -180,12 +336,12 @@
 
 <body>
 
-<header>
+<header class="menu-header">
   <a href="index.html" class="logo"><span class="brand-symbol" aria-hidden="true"><img src="assets/sosco-logo-transparent.png" alt="" width="1166" height="1349"></span><span class="brand-wordmark"><img src="assets/sosco-logo-transparent.png" alt="SOS &amp; CO. — Soslu Tavuk, Pilav, Makarna, Meze" width="1166" height="1349"></span></a>
 
   <nav>
     <a href="index.html">Ana Sayfa</a>
-    <a href="menu.html" class="active">Menü</a>
+    <a href="menu.html" class="active" aria-current="page">Menü</a>
     <a href="hakkimizda.html">Hakkımızda</a>
     <a href="toplu-yemek.html" class="nav-catering">Toplu Yemek ↗</a>
 <a href="blog.html">Blog</a>
@@ -193,24 +349,30 @@
   </nav>
 </header>
 
+<main class="menu-catalog">
 <section class="hero">
-  <h1>Lezzet Menümüz</h1>
+  <span class="menu-kicker">SOS &amp; CO. / MENÜ</span>
+  <h1>Lezzet <span>Menümüz</span></h1>
   <p>Sosun bol, lezzetin tam hali.</p>
 </section>
 
-<div class="categories">
-  <button class="active" data-filter="all"><span aria-hidden="true">✦</span> Tümü</button>
-  <button data-filter="tavuk"><span aria-hidden="true">🍗</span> Tavuk</button>
-  <button data-filter="pilav"><span aria-hidden="true">🍚</span> Pilav</button>
-  <button data-filter="makarna"><span aria-hidden="true">🍝</span> Makarna</button>
-  <button data-filter="meze"><span aria-hidden="true">🥗</span> Meze</button>
-  <button data-filter="soguk-icecekler"><span aria-hidden="true">🥤</span> Soğuk İçecekler</button>
-  <button data-filter="sicak-icecekler"><span aria-hidden="true">☕</span> Sıcak İçecekler</button>
+<div class="menu-filters">
+  <p class="menu-filter-label" aria-hidden="true">KATEGORİLER <span class="menu-filter-hint">Kaydır ↔</span></p>
+  <div class="categories" role="group" aria-label="Menü kategorileri">
+    <button type="button" class="active" data-filter="all" aria-pressed="true">Tümü</button>
+    <button type="button" data-filter="tavuk" aria-pressed="false">Tavuk</button>
+    <button type="button" data-filter="pilav" aria-pressed="false">Pilav</button>
+    <button type="button" data-filter="makarna" aria-pressed="false">Makarna</button>
+    <button type="button" data-filter="meze" aria-pressed="false">Meze</button>
+    <button type="button" data-filter="soguk-icecekler" aria-pressed="false">Soğuk İçecekler</button>
+    <button type="button" data-filter="sicak-icecekler" aria-pressed="false">Sıcak İçecekler</button>
+  </div>
 </div>
 
-<p id="status" class="status">Menü yükleniyor...</p>
+<p id="status" class="status" role="status">Menü yükleniyor...</p>
 
-<main class="products" id="productList"></main>
+<div class="products" id="productList"></div>
+</main>
 
 <section class="site-wrap catering-banner" aria-labelledby="catering-title"><span class="kicker">KALABALIK SOFRALAR, BOL LEZZET</span><h2 id="catering-title" class="feature-title">İş yerinize, davetinize<br>bol lezzet.</h2><p class="feature-copy">İş yerleri için düzenli yemek; mevlüt yemeği, düğün ve özel davetler için toplu yemek talebinizi bize iletin. Menüyü, kişi sayısını ve organizasyon ayrıntılarını birlikte konuşalım.</p><div class="occasion-tags"><a href="toplu-yemek.html?hizmet=%C4%B0%C5%9F+yeri+%2F+ofis#teklif">İş yeri &amp; ofis ↗</a><a href="toplu-yemek.html?hizmet=Mevl%C3%BCt+yeme%C4%9Fi+%2F+hay%C4%B1r+yeme%C4%9Fi#teklif">Mevlüt yemeği ↗</a><a href="toplu-yemek.html?hizmet=D%C3%BC%C4%9F%C3%BCn+%2F+ni%C5%9Fan#teklif">Düğün &amp; nişan ↗</a><a href="toplu-yemek.html?hizmet=%C3%96zel+davet#teklif">Özel davetler ↗</a></div><div class="feature-actions"><a class="feature-button" href="toplu-yemek.html#teklif">Toplu Yemek İçin Teklif Al ↗</a><a class="feature-link" href="toplu-yemek.html">Nasıl planlıyoruz? →</a></div></section>
 <section class="site-wrap online-order" id="online-siparis" aria-labelledby="online-title"><div class="online-heading"><div><span class="kicker">LEZZETE BİR TIK UZAKTASIN</span><h2 id="online-title">Canın çektiyse,<br><span>sipariş zamanı.</span></h2></div><p>Yemeksepeti mağazamızdan sipariş ver, bol soslu lezzetlerimizi keşfet. Diğer platformların mağaza bağlantıları da yakında burada.</p></div><div class="platform-grid"><a class="platform-card platform-yemeksepeti" href="https://www.yemeksepeti.com/restaurant/k70w/sos-and-co-k70w" target="_blank" rel="noopener noreferrer" aria-label="SOS & CO. Yemeksepeti mağazasından sipariş ver (yeni sekme)"><span class="platform-top"><span>ONLINE SİPARİŞ</span><span aria-hidden="true">↗</span></span><strong class="platform-name">Yemeksepeti</strong><span class="platform-bottom">Sipariş ver <span aria-hidden="true">→</span></span></a><div class="platform-card platform-migros platform-pending"><span class="platform-top"><span>ONLINE SİPARİŞ</span><span aria-hidden="true">＋</span></span><span class="platform-artwork"><img src="assets/platforms/migros-yemek.webp" alt="Migros Yemek" loading="lazy"></span><strong class="platform-name platform-caption">Migros Yemek</strong><span class="platform-bottom">Mağaza bağlantısı yakında</span></div><div class="platform-card platform-getir platform-pending"><span class="platform-top"><span>ONLINE SİPARİŞ</span><span aria-hidden="true">＋</span></span><span class="platform-artwork"><img src="assets/platforms/getir-yemek.webp" alt="GetirYemek" loading="lazy" width="474" height="87"></span><strong class="platform-name platform-caption">GetirYemek</strong><span class="platform-bottom">Mağaza bağlantısı yakında</span></div><div class="platform-card platform-tgo platform-pending"><span class="platform-top"><span>ONLINE SİPARİŞ</span><span aria-hidden="true">＋</span></span><span class="platform-artwork"><img src="assets/platforms/tikla-gelsin.png" alt="Tıkla Gelsin" loading="lazy"></span><strong class="platform-name platform-caption">Tıkla Gelsin</strong><span class="platform-bottom">Mağaza bağlantısı yakında</span></div><div class="platform-card platform-trendyol platform-pending"><span class="platform-top"><span>ONLINE SİPARİŞ</span><span aria-hidden="true">＋</span></span><span class="platform-artwork"><img src="assets/platforms/trendyol-go.png" alt="Trendyol GO" loading="lazy"></span><strong class="platform-name platform-caption">Trendyol GO</strong><span class="platform-bottom">Mağaza bağlantısı yakında</span></div></div><p class="platform-note">Yemeksepeti bağlantısı doğrudan restoran mağazamızı açar. Teslimat uygunluğunu adresinizi seçerek kontrol edebilirsiniz.</p><div class="meal-payments"><div class="meal-payment-intro"><span class="kicker">YEMEK KARTLARI</span><h3>Yemek kartınla da öde.</h3><p>Restoranımızda Edenred, Pluxee, Multinet, Setcard ve Metropol geçerlidir. Online siparişte kullanılabilen ödeme yöntemlerini ilgili platformdan kontrol edebilirsiniz.</p></div><div class="meal-card-list"><a href="https://wa.me/905343370248?text=Merhaba%2C%20Edenred%20ile%20%C3%B6deme%20hakk%C4%B1nda%20bilgi%20alabilir%20miyim%3F" target="_blank" rel="noopener noreferrer" aria-label="Edenred ile ödeme hakkında WhatsApp’tan bilgi al"><span class="meal-logo"><img src="assets/meal-cards/edenred.png" alt="" loading="lazy" width="180" height="72"></span><span class="meal-name">Edenred</span><span>Restoranda geçerli · Bilgi al ↗</span></a><a href="https://wa.me/905343370248?text=Merhaba%2C%20Pluxee%20ile%20%C3%B6deme%20hakk%C4%B1nda%20bilgi%20alabilir%20miyim%3F" target="_blank" rel="noopener noreferrer" aria-label="Pluxee ile ödeme hakkında WhatsApp’tan bilgi al"><span class="meal-logo"><img src="assets/meal-cards/pluxee.svg" alt="" loading="lazy" width="180" height="72"></span><span class="meal-name">Pluxee</span><span>Restoranda geçerli · Bilgi al ↗</span></a><a href="https://wa.me/905343370248?text=Merhaba%2C%20Multinet%20ile%20%C3%B6deme%20hakk%C4%B1nda%20bilgi%20alabilir%20miyim%3F" target="_blank" rel="noopener noreferrer" aria-label="Multinet ile ödeme hakkında WhatsApp’tan bilgi al"><span class="meal-logo"><img src="assets/meal-cards/multinet.svg" alt="" loading="lazy" width="180" height="72"></span><span class="meal-name">Multinet</span><span>Restoranda geçerli · Bilgi al ↗</span></a><a href="https://wa.me/905343370248?text=Merhaba%2C%20Setcard%20ile%20%C3%B6deme%20hakk%C4%B1nda%20bilgi%20alabilir%20miyim%3F" target="_blank" rel="noopener noreferrer" aria-label="Setcard ile ödeme hakkında WhatsApp’tan bilgi al"><span class="meal-logo"><img src="assets/meal-cards/setcard.svg" alt="" loading="lazy" width="180" height="72"></span><span class="meal-name">Setcard</span><span>Restoranda geçerli · Bilgi al ↗</span></a><a href="https://wa.me/905343370248?text=Merhaba%2C%20Metropol%20ile%20%C3%B6deme%20hakk%C4%B1nda%20bilgi%20alabilir%20miyim%3F" target="_blank" rel="noopener noreferrer" aria-label="Metropol ile ödeme hakkında WhatsApp’tan bilgi al"><span class="meal-logo"><img src="assets/meal-cards/metropol.svg" alt="" loading="lazy" width="180" height="72"></span><span class="meal-name">Metropol</span><span>Restoranda geçerli · Bilgi al ↗</span></a></div></div></section>
@@ -241,29 +403,41 @@
   const statusText =
     document.getElementById("status");
 
-  const buttons =
-    document.querySelectorAll(".categories button");
+  const categoryScroller = document.querySelector(".categories");
+  const buttons = [...categoryScroller.querySelectorAll("button")];
 
   let allProducts = [];
+  let menuReady = false;
   const requestedFilter = new URLSearchParams(window.location.search).get("kategori");
-  let activeFilter = ["tavuk", "pilav", "makarna", "meze", "soguk-icecekler", "sicak-icecekler"].includes(requestedFilter) ? requestedFilter : "all";
-  buttons.forEach(button => {
-    button.classList.toggle("active", button.dataset.filter === activeFilter);
-    button.setAttribute("aria-pressed", String(button.dataset.filter === activeFilter));
-  });
+  let activeFilter = "all";
+
+  function selectCategory(selected) {
+    activeFilter = selected.dataset.filter;
+    buttons.forEach(button => {
+      button.classList.toggle("active", button === selected);
+      button.setAttribute("aria-pressed", String(button === selected));
+    });
+
+    if (categoryScroller.scrollWidth > categoryScroller.clientWidth) {
+      const scrollerBounds = categoryScroller.getBoundingClientRect();
+      const buttonBounds = selected.getBoundingClientRect();
+      const gutter = parseFloat(getComputedStyle(categoryScroller).paddingInlineStart);
+      const leftGap = buttonBounds.left - scrollerBounds.left - gutter;
+      const rightGap = buttonBounds.right - scrollerBounds.right + gutter;
+      categoryScroller.scrollLeft += leftGap < 0 ? leftGap : Math.max(0, rightGap);
+    }
+  }
+
+  selectCategory(buttons.find(button => button.dataset.filter === requestedFilter) || buttons[0]);
 
   // Varsayılan ürün görselleri
   const defaultImages = {
     "soguk-icecekler": "assets/soguk-icecekler.svg",
     "sicak-icecekler": "assets/sicak-icecekler.svg",
-    tavuk:
-      "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=800",
-    pilav:
-      "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800",
-    makarna:
-      "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=800",
-    meze:
-      "https://images.unsplash.com/photo-1547592180-85f173990554?w=800"
+    tavuk: "assets/hero/tavuk-pilav.png",
+    pilav: "assets/hero/tavuk-pilav.png",
+    makarna: "assets/hero/soslu-makarna.jpg",
+    meze: "assets/hero/mezeler.png"
   };
 
   // VERİTABANINDAN ÜRÜNLERİ ÇEK
@@ -286,6 +460,7 @@
       }
 
       allProducts = data || [];
+      menuReady = true;
 
       renderProducts();
 
@@ -308,16 +483,19 @@
   function renderProducts() {
     productList.replaceChildren();
 
-    const filteredProducts = allProducts.filter(product => {
+    const filteredProducts = [];
+    const drinks = [];
+    for (const product of allProducts) {
       const category = categoryKey(product.category);
+      if (activeFilter === "all" && ["soguk-icecekler", "sicak-icecekler"].includes(category)) {
+        drinks.push(product);
+      } else if (activeFilter === "all" || category === activeFilter) {
+        filteredProducts.push(product);
+      }
+    }
+    const visibleProducts = filteredProducts.concat(drinks);
 
-      return (
-        activeFilter === "all" ||
-        category === activeFilter
-      );
-    });
-
-    if (filteredProducts.length === 0) {
+    if (visibleProducts.length === 0) {
       statusText.textContent =
         "Bu kategoride henüz ürün bulunmuyor.";
       return;
@@ -325,34 +503,34 @@
 
     statusText.textContent = "";
 
-    filteredProducts.forEach(product => {
+    visibleProducts.forEach((product, index) => {
       const category = categoryKey(product.category);
 
       const article = document.createElement("article");
       article.className = "product";
 
+      const photo = document.createElement("div");
+      photo.className = "product-photo";
+
       const img = document.createElement("img");
-
-      img.src =
-        product.image_url ||
-        defaultImages[category] ||
-        defaultImages.tavuk;
-
-      img.alt = product.name || "SOS & CO. Ürün";
+      const fallbackImage = defaultImages[category] || defaultImages.tavuk;
+      img.alt = "";
+      img.decoding = "async";
+      img.loading = index < 3 ? "eager" : "lazy";
 
       img.onerror = function() {
         this.onerror = null;
-        this.src =
-          defaultImages[category] ||
-          defaultImages.tavuk;
+        if (product.image_url) this.src = fallbackImage;
       };
 
-      article.appendChild(img);
+      img.src = product.image_url || fallbackImage;
+      photo.appendChild(img);
+      article.appendChild(photo);
 
       const content = document.createElement("div");
       content.className = "product-content";
 
-      const title = document.createElement("h3");
+      const title = document.createElement("h2");
       title.textContent = product.name || "Ürün";
 
       const description = document.createElement("p");
@@ -372,7 +550,7 @@
         : "Fiyat bilgisi yok";
 
       content.appendChild(title);
-      content.appendChild(description);
+      if (description.textContent.trim()) content.appendChild(description);
       content.appendChild(price);
 
       article.appendChild(content);
@@ -383,17 +561,16 @@
   // KATEGORİ BUTONLARI
   buttons.forEach(button => {
     button.addEventListener("click", () => {
-      buttons.forEach(b => {
-        b.classList.remove("active");
-        b.setAttribute("aria-pressed", "false");
-      });
+      const changed = activeFilter !== button.dataset.filter;
+      selectCategory(button);
+      if (!menuReady || !changed) return;
 
-      button.classList.add("active");
-      button.setAttribute("aria-pressed", "true");
-
-      activeFilter = button.dataset.filter;
-
+      const filters = categoryScroller.parentElement.getBoundingClientRect();
+      const listTop = productList.getBoundingClientRect().top;
+      const returnToList = matchMedia("(max-width: 640px)").matches && filters.top <= 0 && listTop < filters.bottom;
+      const listStart = window.scrollY + listTop - filters.height - parseFloat(getComputedStyle(productList).marginTop);
       renderProducts();
+      if (returnToList) window.scrollTo({ top: listStart, behavior: "instant" });
     });
   });
 
