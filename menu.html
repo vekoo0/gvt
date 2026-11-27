@@ -158,6 +158,34 @@
     }
 
     @media (max-width: 600px) {
+      .categories {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 7px;
+        padding: 14px 12px;
+        width: 100%;
+      }
+
+      .categories button {
+        min-width: 0;
+        min-height: 48px;
+        padding: 8px 4px;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        font-size: 12px;
+        line-height: 1.15;
+        white-space: nowrap;
+      }
+
+      .categories button span {
+        font-size: 15px;
+        line-height: 1;
+      }
+
       header {
         flex-direction: column;
       }
@@ -198,14 +226,11 @@
   <p>Sosun bol, lezzetin tam hali.</p>
 </section>
 
-<div class="categories">
-  <button class="active" data-filter="all"><span aria-hidden="true">✦</span> Tümü</button>
-  <button data-filter="tavuk"><span aria-hidden="true">🍗</span> Tavuk</button>
-  <button data-filter="pilav"><span aria-hidden="true">🍚</span> Pilav</button>
-  <button data-filter="makarna"><span aria-hidden="true">🍝</span> Makarna</button>
-  <button data-filter="meze"><span aria-hidden="true">🥗</span> Meze</button>
-  <button data-filter="soguk-icecekler"><span aria-hidden="true">🥤</span> Soğuk İçecekler</button>
-  <button data-filter="sicak-icecekler"><span aria-hidden="true">☕</span> Sıcak İçecekler</button>
+<div class="categories" aria-label="Menü kategorileri">
+  <button class="active" data-filter="tavuk" aria-pressed="true"><span aria-hidden="true">🍗</span> Tavuk</button>
+  <button data-filter="yemekler" aria-pressed="false"><span aria-hidden="true">🍚</span> Yemekler</button>
+  <button data-filter="icecekler" aria-pressed="false"><span aria-hidden="true">🥤</span> İçecekler</button>
+  <button data-filter="mezeler" aria-pressed="false"><span aria-hidden="true">🥗</span> Mezeler</button>
 </div>
 
 <p id="status" class="status">Menü yükleniyor...</p>
@@ -246,7 +271,16 @@
 
   let allProducts = [];
   const requestedFilter = new URLSearchParams(window.location.search).get("kategori");
-  let activeFilter = ["tavuk", "pilav", "makarna", "meze", "soguk-icecekler", "sicak-icecekler"].includes(requestedFilter) ? requestedFilter : "all";
+  const legacyFilterMap = {
+    pilav: "yemekler",
+    makarna: "yemekler",
+    "soguk-icecekler": "icecekler",
+    "sicak-icecekler": "icecekler",
+    meze: "mezeler"
+  };
+  let activeFilter = ["tavuk", "yemekler", "icecekler", "mezeler"].includes(requestedFilter)
+    ? requestedFilter
+    : (legacyFilterMap[requestedFilter] || "tavuk");
   buttons.forEach(button => {
     button.classList.toggle("active", button.dataset.filter === activeFilter);
     button.setAttribute("aria-pressed", String(button.dataset.filter === activeFilter));
@@ -311,10 +345,11 @@
     const filteredProducts = allProducts.filter(product => {
       const category = categoryKey(product.category);
 
-      return (
-        activeFilter === "all" ||
-        category === activeFilter
-      );
+      if (activeFilter === "tavuk") return category === "tavuk";
+      if (activeFilter === "yemekler") return ["pilav", "makarna"].includes(category);
+      if (activeFilter === "icecekler") return ["soguk-icecekler", "sicak-icecekler"].includes(category);
+      if (activeFilter === "mezeler") return category === "meze";
+      return false;
     });
 
     if (filteredProducts.length === 0) {
